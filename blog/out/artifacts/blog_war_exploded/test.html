@@ -1,0 +1,69 @@
+<html>
+<head>
+    <script>
+        /**
+         * js与html5实现的雪花飘落效果
+         * edit：www.jbxue.com
+         */
+
+        function start(){
+
+            var array=new Array();
+
+            var canvas=document.getElementById("mycanvas");
+
+            var context=canvas.getContext("2d");
+
+            for(var i=0;i<50;i++){
+
+                var Showsnow=new showsnow();
+
+                array.push(Showsnow);
+
+            }
+
+
+            time=setInterval(function (){
+
+                context.clearRect(0,0,canvas.width,canvas.height);
+                for(var i=0;i<array.length;i++){
+
+
+                    array[i].move();
+                    array[i].draw(context);
+
+                }
+
+            },500);
+
+        }
+        function showsnow(){
+            var y=parseInt(Math.random()*50)*10;
+
+            var x=parseInt(Math.random()*80)*10;
+
+            this.draw=function(context){
+
+
+                context.font="50px Calibri";
+                context.fillText("*",x,y);
+
+
+            }
+            this.move=function(){
+                y+=20;
+
+                if(y>600){
+                    y=0;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+<input type="button" value="start" οnclick="start()" />
+<br/>
+<canvas id="mycanvas" height="600px" width="600px" style="border: 3px solid blue"></canvas>
+</body>
+</html>
