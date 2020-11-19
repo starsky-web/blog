@@ -1,0 +1,37 @@
+*{
+    border: red solid 1px;
+    margin: 0px;
+    padding: 0px;
+
+}
+html{
+    position:relative;
+}
+/*导航栏*/
+.spn{
+    text-align: center;
+    height: 35px;
+}
+/*内容区，包含左右两侧的内容*/
+#content{
+    border: blue solid 1px;
+    margin: 15px auto;
+    height:5200px;
+    width: 1320px;
+}
+/*左侧部分*/
+#left{
+    width: 300px;
+    height: 1320px;
+
+}
+/*右侧部分*/
+#right{
+    width: 1000px;
+    height: 5200px;
+    float: right;
+}
+/*控制头像区鼠标事件*/
+#spnTou ul li{
+    display: none;
+}
