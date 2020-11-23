@@ -1,5 +1,5 @@
 *{
-    border: red solid 1px;
+    /*border: red solid 1px;*/
     margin: 0px;
     padding: 0px;
 
@@ -7,12 +7,21 @@
 html{
     position:relative;
 }
+body{
+    background-image: url("../../img/login/loginBackgroundImg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
 /*导航栏*/
 .spn{
+    background-color: white;
     text-align: center;
     height: 35px;
+    line-height: 35px;
 }
 .content{
+
     width: 1520px;
     height: 600px;
 
@@ -22,13 +31,105 @@ html{
     display: none;
 }
 /*页脚*/
-.foot{
-    height: 117px;
-    width: 1520px;
-}
+/*.foot{*/
+/*    height: 117px;*/
+/*    width: 1520px;*/
+/*}*/
 /*中间部分*/
 .login{
     width: 790px;
     height: 500px;
-    margin: 50px auto;
+    margin: 100px auto;
+}
+#foot{
+    width: 100%;
+    background: #ffffff;
+    margin-top: 32px;
+}
+#foot1{
+    margin: 0 auto;
+    width: 100%;
+    min-width: 972px;
+    background: white;
+    padding: 24px 34px 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#foot2{
+    text-align: center;
+    -webkit-box-pack: center;
+    margin: 0 0 0 30px;
+    padding: 0px;
+    color: #999aaa;
+    line-height: 45px;
+}
+#foot2 li{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: inline;
+}
+#foot2 li a{
+    line-height: 16px;
+    width: 56px;
+    margin: 0 8px;
+    font-size: 14px;
+    padding: 7px 10px;
+    color: #999aaa;
+}
+#foot3{
+    text-align: center;
+    margin: 0 0 0 0px;
+    padding: 0px;
+    font-size: 12px;
+    color: #999aaa;
+    line-height: 45px;
+}
+#foot3 li{
+    list-style-type: none;
+    display: inline;
+}
+#foot3 li a{
+    margin: 0 10px;
+    text-decoration: none;
+    font-family: Arial,Helvetica,sans-serif;
+    padding: 7px 7px;
+    color: #999aaa;
+}
+#loginLeft{
+    line-height: 30px;
+    padding-right: 50px;
+    padding-left: 40px;
+    padding-top: 80px;
+    color: white;
+    background-color: rgba(0,0,0,0.5);
+    float: left;
+    width: 340px;
+    height: 100%;
+    font-size: 16px;
+}
+#loginRight{
+    float: left;
+    height: 100%;
+    width: 448px;
+    background-color: white;
+}
+.main-title{
+    display: block;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: #3d3d3d;
+    text-align: center;
+    line-height: 30px;
+}
+#formDiv{
+    line-height: 30px;
+    margin-left: 120px;
+}
+#formDiv form input{
+    margin-top: 10px;
 }
