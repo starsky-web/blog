@@ -1,0 +1,16 @@
+#mdUtil{
+    height: 50px;
+    background-color: #f6f6f6;
+    line-height: 50px;
+    padding-left: 25px;
+}
+#mdUtil-span-default{
+    height: 100%;
+    width: 80px;
+    display: block;
+}
+#mdUtil-span-active{
+    height: 100%;
+    width: 80px;
+    display: none;
+}

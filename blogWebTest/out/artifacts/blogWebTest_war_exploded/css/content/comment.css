@@ -1,0 +1,28 @@
+.comment{
+    background-color: white;
+}
+.comment-box{
+    padding-left: 25px;
+    background-color: white;
+    margin-top: 5px;
+}
+.comment-box-headPhoto{
+    margin-top: 2px;
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    float: left;
+}
+.comment-box-textarea{
+    width: 840px;
+}
+.comment-date{
+    color:#6b6b6b;
+    font-size: 12px;
+    margin-left: 8px;
+}
+.comment-unit{
+    margin-left: 25px;
+}
