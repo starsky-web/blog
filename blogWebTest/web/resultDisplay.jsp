@@ -69,7 +69,9 @@
     <hr style="border-top:0.5px dashed #b1b1b1;" width="100%" color="#b1b1b1" size=1>
  <%}%>
 <%}else{ %>
-    啥也不是
+    <div class="searchUnit">
+       <p style="color: #0f0f0f">啥也不是</p>
+    </div>
 <%}%>
 </div>
 <%@include file="foot.jsp"%>

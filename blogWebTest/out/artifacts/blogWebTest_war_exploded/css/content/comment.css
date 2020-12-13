@@ -1,10 +1,13 @@
 .comment{
+    margin-top: 5px;
     background-color: white;
 }
 .comment-box{
     padding-left: 25px;
     background-color: white;
     margin-top: 5px;
+    padding-top: 5px;
+
 }
 .comment-box-headPhoto{
     margin-top: 2px;
@@ -16,6 +19,7 @@
     float: left;
 }
 .comment-box-textarea{
+    height: 40px;
     width: 840px;
 }
 .comment-date{

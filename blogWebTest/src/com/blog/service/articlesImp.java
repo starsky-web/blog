@@ -3,6 +3,7 @@ package com.blog.service;
 import com.blog.dao.ArticlesDaoImp;
 import com.blog.dao.IArticlesDao;
 import com.blog.entity.Comments;
+import com.blog.entity.UserRanking;
 
 import java.util.List;
 
@@ -124,5 +125,46 @@ public class articlesImp implements IArticles{
         IArticlesDao dao = new ArticlesDaoImp();
         List searchResult = dao.search(search);
         return searchResult;
+    }
+
+    @Override
+    public int updateUserProfilePhoto(String profilePhotoPath,int user_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        return dao.updateUserProfilePhoto(profilePhotoPath,user_id);
+    }
+
+    @Override
+    public List searchLimitId(String search, int user_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List searchResult = dao.searchLimitId(search, user_id);
+        return searchResult;
+    }
+
+    @Override
+    public List getUserRanking() {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List<UserRanking> userRanking = dao.getUserRanking();
+        return userRanking;
+    }
+
+    @Override
+    public List getHotRecommend() {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List hotRecommend = dao.getHotRecommend();
+        return hotRecommend;
+    }
+
+    @Override
+    public List getIndexMd() {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List indexMd = dao.getIndexMd();
+        return indexMd;
+    }
+
+    @Override
+    public List getIndexMdByClassFy(String classFy) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List indexMdByClassFy = dao.getIndexMdByClassFy(classFy);
+        return indexMdByClassFy;
     }
 }

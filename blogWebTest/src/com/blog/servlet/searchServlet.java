@@ -25,10 +25,19 @@ public class searchServlet extends HttpServlet {
         session.setAttribute("searchResult",searchResult);
         PrintWriter pw = response.getWriter();
         pw.write(1);
-//        request.getRequestDispatcher(" ").forward(request,response);
+        response.sendRedirect("resultDisplay.jsp");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+        System.out.println("search");
+        String search = request.getParameter("search");
+        System.out.println("search---"+search);
+        IArticles ia = new articlesImp();
+        List searchResult = ia.search(search);
+        HttpSession session = request.getSession();
+        session.setAttribute("searchResult",searchResult);
+        PrintWriter pw = response.getWriter();
+        pw.write(1);
+        response.sendRedirect("resultDisplay.jsp");
     }
 }

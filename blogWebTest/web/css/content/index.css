@@ -131,7 +131,7 @@ a{
     /*background-color: white;*/
     background-color: rgba(255,255,255,0.5);
     margin: 10px auto;
-    height:5420px;
+    height:4120px;
 }
 /*顶部栏左侧*/
 #left1{
@@ -170,7 +170,16 @@ a{
     float: left;
     width: 285px;
     height: 120px;
-    
+    color: white;
+    text-align: center;
+    font-size: 17px;
+}
+.fourHot a{
+    text-decoration: none;
+    color: white;
+}
+.fourHot a:hover{
+    text-decoration: none;
 }
 /*三个头条*/
 .threeTou{
@@ -234,28 +243,29 @@ a{
 }
 #fourHot1{
     margin-left: 20px;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
     background-position: center;
     background-repeat: no-repeat;
 
 }
+
 #fourHot2{
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
 }
 #fourHot3{
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
 }
 #fourHot4{
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
 }
 #threeTou1{
@@ -364,6 +374,7 @@ a{
     width:260px;
 }
 .pythonHotLi{
+    list-style: none;
     height: 55px;
     width: 100%;
 }
@@ -406,6 +417,7 @@ a{
     width:260px;
 }
 .frontHotLi{
+    list-style: none;
     height: 55px;
     width: 100%;
 }
@@ -433,6 +445,7 @@ a{
 
 }
 .listUlLi ul li{
+    margin-left: 25px;
     text-align: left;
     margin-top: 10px;
 }

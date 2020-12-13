@@ -22,4 +22,11 @@ public interface IArticles {
     List selectNewComments(int user_id);//根据用户id查找该用户的所有文章中最新的5条评论
     String getArticleTitleById(int article_id);
     List search(String search);
+    int updateUserProfilePhoto(String profilePhotoPath,int user_id);
+    List searchLimitId(String search,int user_id);
+    //首页用
+    List getUserRanking();
+    List getHotRecommend();
+    List getIndexMd();//随机拉取90篇文章
+    List getIndexMdByClassFy(String classFy);
 }

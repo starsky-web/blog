@@ -103,6 +103,10 @@ body{
     height: 50px;
     margin-bottom: 10px;
 }
+.input-group-addon, .input-group-btn {
+    width: 0;
+    vertical-align: top;
+}
 #hotText{
 
     background-color: white;
@@ -111,6 +115,7 @@ body{
     margin-bottom: 10px;
 
 }
+
 #classify{
 
     background-color: white;
@@ -326,6 +331,14 @@ body{
 }
 .viewCounter{
     margin-left: 15px;
+}
+#hotText a{
+    text-decoration: none;
+    color: #0f0f0f;
+}
+#hotText a:hover{
+    text-decoration: none;
+    color: #0f0f0f;
 }
 
 
