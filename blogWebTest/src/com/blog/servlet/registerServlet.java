@@ -24,7 +24,7 @@ public class registerServlet extends HttpServlet {
 
 
         String user_name = request.getParameter("user_name");
-        String user_password = request.getParameter("user_password");
+        String user_password = request.getParameter("password");
         String birthdayYear = request.getParameter("birthdayYear");
         String birthdayMouth = request.getParameter("birthdayMouth");
         String birthdayDay = request.getParameter("birthdayDay");
@@ -32,7 +32,7 @@ public class registerServlet extends HttpServlet {
         Date user_birthday = new Date(Integer.parseInt(birthdayYear)-1900,Integer.parseInt(birthdayMouth)-1,Integer.parseInt(birthdayDay));
 
         //int  user_age = Integer.parseInt(request.getParameter("user_age"));
-        String user_telephone_number = request.getParameter("user_telephone_number");
+        String user_telephone_number = request.getParameter("telephone");
 
         User user = new User();
         user.setUser_name(user_name);
@@ -48,10 +48,12 @@ public class registerServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
             //request.setAttribute("user",user);
-            request.getRequestDispatcher("login.html").forward(request,response);
+//            request.getRequestDispatcher("login.html").forward(request,response);
+            response.sendRedirect("login.jsp");
         }else{
             //为空则返回注册页，并弹出警告
             request.getRequestDispatcher("register.jsp").forward(request,response);
+
         }
 
     }

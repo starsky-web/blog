@@ -225,7 +225,7 @@
                 </div>
                 <% for (Articles hotMd : info.getHotMd()) {%>
                 <div class="hotTextUnit">
-                    <a href="mdShowServlet?mdName=<%=hotMd.getArticle_content()%>">
+                    <a href="otherMdShowServlet?id=<%=hotMd.getUser_id()%>&mdName=<%=hotMd.getArticle_content()%>">
                         <%=hotMd.getArticle_title()%><span class="glyphicon glyphicon-eye-open hotEye" style="margin-right: 5px;color: #cfcfda"></span><%=hotMd.getArticle_views()%>
                     </a>
                 </div>
@@ -321,7 +321,7 @@
             <% for (Articles md:allMd) {%>
             <div class="rightUnit">
                 <div class="rightUnitTitle">
-                    <a style="display: block" href="mdShowServlet?mdName=<%=md.getArticle_content()%>"><span class="design">原创</span><%=md.getArticle_title()%></a>
+                    <a style="display: block" href="otherMdShowServlet?id=<%=md.getUser_id()%>&mdName=<%=md.getArticle_content()%>"><span class="design">原创</span><%=md.getArticle_title()%></a>
                 </div>
                 <div class="rightUnitText">
                     <%=md.getArticle_preview()%>

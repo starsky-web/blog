@@ -96,6 +96,18 @@
                         dataType:"text"//设置接收到的响应数据的格式
                     });
                 }
+                function sub(d) {
+                    $.ajax({
+                        url:"mdShowServlet",
+                        type:"post",
+                        data:{
+                            "mdName":d
+                        },
+                        success:function () {
+
+                        }
+                    })
+                }
             </script>
         </div>
         <div class="col-lg-1 spn"><a href="mdEditor.jsp" class="a1"><i class="li1"></i>创作中心</a></div>
@@ -338,7 +350,8 @@
             <% for (Articles md:allMd) {%>
                     <div class="rightUnit">
                         <div class="rightUnitTitle">
-                            <a style="display: block" href="mdShowServlet?mdName=<%=md.getArticle_content()%>"><span class="design">原创</span><%=md.getArticle_title()%></a>
+<%--                            <a style="display: block" href="mdShowServlet?mdName=<%=md.getArticle_content()%>"><span class="design">原创</span><%=md.getArticle_title()%></a>--%>
+                            <a style="display: block" onclick="sub('<%=md.getArticle_content()%>') "><span class="design">原创</span><%=md.getArticle_title()%></a>
                         </div>
                         <div class="rightUnitText">
                             <%=md.getArticle_preview()%>
