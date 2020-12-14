@@ -20,7 +20,7 @@
     <script type="text/javascript" src="js/content/index.js"></script>
 </head>
 <body>
-<div class="container-fluid" style="padding-top: 5px;background-color: white">
+<div class="container-fluid" style="padding-top: 5px">
     <div class="row">
         <div class="col-lg-1 spn"></div>
         <div class="col-lg-1 spn"><a href="#"><img src="img/blackLogo.png"> </a></div>
@@ -59,7 +59,7 @@
         <div class="col-lg-1 spn" id="spnTou">
             <% User user= (User) session.getAttribute("user");%>
             <% if (user==null){%>
-            <a href="login.jsp">登录</a>/<a href="register.jsp">注册</a>
+            <a href="login.html">登录</a>/<a href="register.jsp">注册</a>
             <%}else{%>
             <%if (user.getUser_profile_photo()!=null){%>
             <a><img src="UserFile/headPhoto/<%=user.getUser_profile_photo()%>" class="headPhoto" style="border-radius: 50%;width: 32px;height: 32px"></a>

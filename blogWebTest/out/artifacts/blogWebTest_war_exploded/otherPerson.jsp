@@ -26,16 +26,6 @@
     <link href="css/content/spn.css" rel="stylesheet" type="text/css">
     <script src="js/content/person.js"></script>
     <title>Title</title>
-    <style>
-        #hotText a{
-            text-decoration: none;
-            color: #0f0f0f;
-        }
-        #hotText a:hover{
-            text-decoration: none;
-            color: #0f0f0f;
-        }
-    </style>
 </head>
 <body>
 <%--导航栏--%>
@@ -47,56 +37,25 @@
         <div class="col-lg-1 spn"><a href="#">关于</a></div>
         <div class="col-lg-5 spn find">
             <div class="input-group">
-                <input id="input1" type="text" value placeholder="博客点击开始" autocomplete="off" name="search">
-                <button id="shosuo" onclick="search()"></button>
+                <input id="input1" type="text" value placeholder="博客点击开始" autocomplete="off" onkeydown="onKeyDown(event)">
+                <button id="shosuo"></button>
+
                 </span>
             </div>
-            <script>
-                function search(){
-                    <!--执行搜索点击事件-->
-                    $.ajax({
-                        url:"searchServlet",//请求路径
-                        type:"post",//请求方式
-                        //data:"username=jack",//请求参数
-                        data:{
-                            "search":$('#input1').val()
-                        },
-                        success:function (data) {
+            <!--搜索处理，放在js中-->
+            <!--            <script>-->
+            <!--                /* 搜索框  */-->
+            <!--                function onKeyDown(event){-->
+            <!--                    //执行搜索点击事件-->
 
-                            location.href="resultDisplay.jsp";
-
-                        },//响应成功后的回调函数
-                        error:function () {
-
-                        },//表示如果请求响应出现错误，会执行的回调函数
-                        dataType:"text"//设置接收到的响应数据的格式
-                    });
-                }
-                function searchLimitId() {
-                    $.ajax({
-                        url:"searchLimitIdServlet",//请求路径
-                        type:"post",//请求方式
-                        //data:"username=jack",//请求参数
-                        data:{
-                            "SLI":$('#SLI').val(),
-                            "id":"<%=HostUser.getUser_id()%>"
-                        },
-                        success:function (data) {
-                            location.href="resultDisplay.jsp";
-                        },//响应成功后的回调函数
-                        error:function () {
-
-                        },//表示如果请求响应出现错误，会执行的回调函数
-                        dataType:"text"//设置接收到的响应数据的格式
-                    });
-                }
-            </script>
+            <!--                }-->
+            <!--            </script>-->
         </div>
         <div class="col-lg-1 spn"><a href="mdEditor.jsp" class="a1"><i class="li1"></i>创作中心</a></div>
         <div class="col-lg-1 spn" id="spnTou">
                 <%User user = (User) session.getAttribute("user");%>
                 <% if (user==null){%>
-            <a href="login.jsp">登录</a>/<a href="register.jsp">注册</a>
+            <a href="login.html">登录</a>/<a href="register.jsp">注册</a>
                 <%}else{%>
                 <%if (user.getUser_profile_photo()!=null){%>
             <a><img src="UserFile/headPhoto/<%=user.getUser_profile_photo()%>" class="headPhoto" style="border-radius: 50%;width: 32px;height: 32px"></a>
@@ -211,9 +170,9 @@
             </div>
             <div id="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." id="SLI">
+                    <input type="text" class="form-control" placeholder="Search for...">
                     <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" onclick="searchLimitId()"><span class="glyphicon glyphicon-search"></span></button>
+                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </div>
             </div>
@@ -225,14 +184,44 @@
                 </div>
                 <% for (Articles hotMd : info.getHotMd()) {%>
                 <div class="hotTextUnit">
+<<<<<<< HEAD
                     <a href="otherMdShowServlet?id=<%=hotMd.getUser_id()%>&mdName=<%=hotMd.getArticle_content()%>">
                         <%=hotMd.getArticle_title()%><span class="glyphicon glyphicon-eye-open hotEye" style="margin-right: 5px;color: #cfcfda"></span><%=hotMd.getArticle_views()%>
+=======
+                    <a href="mdShowServlet?mdName=<%=hotMd.getArticle_content()%>">
+                        <%=hotMd.getArticle_title()%><span class="glyphicon glyphicon-eye-open hotEye"><%=hotMd.getArticle_views()%></span>
+>>>>>>> parent of 0dbee85... 完成
                     </a>
                 </div>
                 <%}%>
             </div>
             <!--分类专栏-->
+            <div id="classify">
+                <div class="title">
+                    分类专类
+                </div>
+                <div class="classifyUnit">
+                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
+                    javaScript<span class="classifyUnitNum">5篇</span>
+                </div>
+                <div class="classifyUnit">
+                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
+                    javaScript<span class="classifyUnitNum">5篇</span>
+                </div>
+                <div class="classifyUnit">
+                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
+                    javaScript<span class="classifyUnitNum">5篇</span>
+                </div>
+                <div class="classifyUnit">
+                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
+                    javaScript<span class="classifyUnitNum">5篇</span>
+                </div>
+                <div class="classifyUnit">
+                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
+                    javaScript<span class="classifyUnitNum">5篇</span>
+                </div>
 
+            </div>
             <!--最新评论-->
             <div id="newComment">
                 <div class="title">

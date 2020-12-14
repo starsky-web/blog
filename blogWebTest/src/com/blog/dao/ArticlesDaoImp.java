@@ -1,6 +1,7 @@
 package com.blog.dao;
 
-import com.blog.entity.*;
+import com.blog.entity.Articles;
+import com.blog.entity.Comments;
 import com.blog.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -138,46 +139,5 @@ public class ArticlesDaoImp implements IArticlesDao{
         String sql = "select * from articles where article_title like ?";
         List<Articles> searchResult = template.query(sql, new BeanPropertyRowMapper<Articles>(Articles.class), "%" + search + "%");
         return searchResult;
-    }
-
-    @Override
-    public int updateUserProfilePhoto(String profilePhotoPath,int user_id) {
-        String sql = "update users set user_profile_photo = ? where user_id = ?";
-        return template.update(sql,profilePhotoPath,user_id);
-    }
-
-    @Override
-    public List searchLimitId(String search, int user_id) {
-        String sql = "select * from articles where article_title like ? and user_id = ?";
-        List<Articles> searchResult = template.query(sql, new BeanPropertyRowMapper<Articles>(Articles.class), "%" + search + "%", user_id);
-        return searchResult;
-    }
-
-    @Override
-    public List getUserRanking() {
-        String sql = "select users.user_id,user_name,user_profile_photo,SUM(article_like_count) as likeCounter from users,articles where users.user_id=articles.user_id GROUP BY user_id ORDER BY SUM(article_like_count) DESC LIMIT 0,8";
-        List<UserRanking> userRankings = template.query(sql, new BeanPropertyRowMapper<UserRanking>(UserRanking.class));
-        return userRankings;
-    }
-
-    @Override
-    public List getHotRecommend() {
-        String sql = "select users.user_id,user_name,user_profile_photo,article_title,article_views from users,articles where users.user_id=articles.user_id ORDER BY article_views DESC LIMIT 0,8";
-        List<hotRecommend> hotRecommends = template.query(sql, new BeanPropertyRowMapper<hotRecommend>(hotRecommend.class));
-        return hotRecommends;
-    }
-
-    @Override
-    public List getIndexMd() {
-        String sql = "select users.user_id,user_name,user_profile_photo,article_title,article_content from users,articles where users.user_id=articles.user_id ORDER BY RAND() LIMIT 0,60";
-        List<indexMd> indexMds = template.query(sql, new BeanPropertyRowMapper<indexMd>(indexMd.class));
-        return indexMds;
-    }
-
-    @Override
-    public List getIndexMdByClassFy(String classFy) {
-        String sql = "select users.user_id,user_name,user_profile_photo,article_title,article_content from users,articles where users.user_id=articles.user_id AND article_title like ? ORDER BY RAND() LIMIT 0,8";
-        List<indexMd> mds = template.query(sql, new BeanPropertyRowMapper<indexMd>(indexMd.class), "%" + classFy + "%");
-        return mds;
     }
 }
