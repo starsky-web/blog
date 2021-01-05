@@ -13,7 +13,7 @@ public class UserDaoImp implements IUserDao {
     @Override
     public User register(User user) {
         String sql = "insert into users values(?,?,?,?,?,?,?,?)";
-        int update = template.update(sql, user.getUser_id(), user.getUser_name(), user.getUser_password(), user.getUser_profile_photo(), new Timestamp(System.currentTimeMillis()),
+        int update = template.update(sql, user.getUser_id(), user.getUser_name(), user.getUser_password(), "default.png", new Timestamp(System.currentTimeMillis()),
                 user.getUser_birthday(), user.getUser_age(), user.getUser_telephone_number());
         if (update==1){
             return user;

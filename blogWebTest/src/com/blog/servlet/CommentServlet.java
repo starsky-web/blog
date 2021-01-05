@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet("/CommentServlet")
 public class CommentServlet extends HttpServlet {
@@ -39,6 +41,11 @@ public class CommentServlet extends HttpServlet {
 
         //存储至数据库
         int i = ia.storeComment(comments);
+
+        //重新获取信息
+        List newComments = ia.selectComment(articleId);
+        HttpSession session = request.getSession();
+        session.setAttribute("comments",newComments);
         PrintWriter pw = response.getWriter();
         pw.write(1);
     }

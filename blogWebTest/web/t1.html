@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <style>
+        .headerSpan {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+        .headerSpan:after {
+            content: "";
+            background:rgba(0,0,0,0.4);
+            z-index:2;
+            -webkit-transition: 0.2s;
+            -moz-transition: 0.2s;
+            -ms-transition: 0.2s;
+            -o-transition: 0.2s;
+            transition: 0.2s;
+            position: absolute;
+            border-radius: 45px;
+            top: 0px;
+            right: -0.8px;
+            width: 4.4rem;
+            height: 4.4rem;
+            opacity: 0;
+            filter: alpha(opacity=0);
+        }
+        .headerSpan:hover:after {
+            opacity: 100;
+            filter: alpha(opacity=0);
+            cursor: pointer;
+        }
+
+           .headerSpan:before {
+               content: "更换头像";
+               display: inline-block;
+               float: right;
+               position: absolute;
+               z-index: 5;
+               top: 24px;
+               right: 0.5rem;
+               width: 3.5rem;
+               height: 1.5rem;
+               opacity: 0;
+               color: white;
+               filter: alpha(opacity=0);
+           }
+        .headerSpan:hover:before {
+            opacity: 100;
+            filter: alpha(opacity=0);
+            cursor: pointer;
+        }
+        .hiddenInput {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 70px;
+            height: 70px;
+            z-index: 6;
+            opacity: 0;
+            cursor: pointer;
+            border-radius: 45px;
+        }
+
+    </style>
+</head>
+<body>
+<span class="headerSpan">
+                <img class="headerImg" src="UserFile/headPhoto/default.png">
+                <input @change="a($event)" ref="file" title='' type="file" accept="image/*" class="hiddenInput" formaction="uploadServlet"/>
+              </span>
+<script>
+    getImgUrl: function a(e) {
+        this.logoUrl = e.target.files[0]
+        console.log(this.logoUrl)
+    }
+
+</script>
+
+</body>
+</html>

@@ -2,10 +2,11 @@
     /*border: red solid 1px;*/
     margin: 0px;
     padding: 0px;
-
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 html{
     position:relative;
+    cursor: url(../光标.ico),auto;
 }
 body{
     background-color: #f6f6f6;
@@ -13,6 +14,21 @@ body{
 a{
     text-decoration: none;
     color:black;
+}
+.friendClass{
+    color: #555666;
+    display: inline-block;
+    border: 1px solid #e8e8ed;
+    padding: 0 32px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 4px;
+    margin-right: 16px;
+    font-size: 15px;
+}
+.fr{
+    text-decoration: none;
+    display: block;
 }
 
 /*控制头像区鼠标事件*/
@@ -129,9 +145,9 @@ a{
 .content{
     width: 1230px;
     /*background-color: white;*/
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(255,255,255,0.7);
     margin: 10px auto;
-    height:5420px;
+    height:4120px;
 }
 /*顶部栏左侧*/
 #left1{
@@ -165,12 +181,22 @@ a{
 }
 /*四个热点话题*/
 .fourHot{
+    border-radius: 4px;
     color:white;
     margin-right: 15px;
     float: left;
     width: 285px;
     height: 120px;
-    
+    color: white;
+    text-align: center;
+    font-size: 17px;
+}
+.fourHot a{
+    text-decoration: none;
+    color: white;
+}
+.fourHot a:hover{
+    text-decoration: none;
 }
 /*三个头条*/
 .threeTou{
@@ -189,7 +215,7 @@ a{
     background: #ffffff;
     border-radius: 6px;
     width: 64px;
-    height: 500px;
+    height: 350px;
     border: 1px solid #e6e6e6;
 }
 
@@ -234,28 +260,29 @@ a{
 }
 #fourHot1{
     margin-left: 20px;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
     background-position: center;
     background-repeat: no-repeat;
 
 }
+
 #fourHot2{
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
 }
 #fourHot3{
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
 }
 #fourHot4{
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../img/index/20200928100827.jpg");
+    /*background-image: url("../../img/index/20200928100827.jpg");*/
     background-size: 285px 120px;
 }
 #threeTou1{
@@ -280,7 +307,7 @@ a{
     height: 494px;
 }
 .video{
-
+    font-size: 15px;
     float: left;
     width: 210px;
     height: 230px;
@@ -297,6 +324,7 @@ a{
     width: 100%;
 }
 .threeTou2-content{
+    font-size: 15px;
     margin-bottom: 20px;
 }
 .communityDisplay{
@@ -352,6 +380,7 @@ a{
     width:260px;
 }
 .pythonVideo{
+    font-size: 15px;
     float: left;
     width: 210px;
     height: 210px;
@@ -364,6 +393,7 @@ a{
     width:260px;
 }
 .pythonHotLi{
+    list-style: none;
     height: 55px;
     width: 100%;
 }
@@ -406,6 +436,7 @@ a{
     width:260px;
 }
 .frontHotLi{
+    list-style: none;
     height: 55px;
     width: 100%;
 }
@@ -433,6 +464,7 @@ a{
 
 }
 .listUlLi ul li{
+    margin-left: 25px;
     text-align: left;
     margin-top: 10px;
 }

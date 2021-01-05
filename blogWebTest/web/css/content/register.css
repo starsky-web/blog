@@ -30,7 +30,7 @@
     width: 16px;
     height: 14px;
     display: inline-block;
-    background: url(../../img/uc_icon2x.5f15827.png) no-repeat;
+    /*background: url(../../img/uc_icon2x.5f15827.png) no-repeat;*/
     background-size: 174px 36px;
     background-position: -96px -11px;
     cursor: pointer;
@@ -98,10 +98,10 @@ form {
     display: inline-block;
     width: 100%;
 }
-/*.el-input__inner{*/
+/*.required{*/
 /*    padding-right: 26px;*/
 /*}*/
-.el-input__inner {
+.required {
     -webkit-appearance: none;
     background-color: #fff;
     background-image: none;
@@ -118,7 +118,45 @@ form {
     padding: 0 15px;
     -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-    width: 350px;
+    width: 250px;
+}
+.required1 {
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 250px;
+}
+.required2 {
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 250px;
 }
 .el-input__suffix {
     right: 5px;

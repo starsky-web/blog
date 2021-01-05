@@ -16,6 +16,7 @@ public class UserUtil {
         info.setHotMd(ia.selectHotMd(user_id));
         info.setNewMd(ia.selectNewMd(user_id));
         info.setNewComments(ia.selectNewComments(user_id));
+        info.setCommentCounter(ia.selectCommentCounter(user_id));
         return info;
     }
 }

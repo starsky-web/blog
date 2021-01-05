@@ -23,16 +23,5 @@ public class MdTest {
             e.printStackTrace();
         }
     }
-    @Test
-    public void selectAllMdTest(){
-        int user_id=2;
-        IArticlesDao ia = new ArticlesDaoImp();
-        List<Articles> list = ia.selectAllMd(user_id);
 
-
-        for (Articles o : list) {
-            System.out.println(o.toString());
-        }
-
-    }
 }

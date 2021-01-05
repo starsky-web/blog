@@ -2,7 +2,10 @@ package com.blog.service;
 
 import com.blog.dao.ArticlesDaoImp;
 import com.blog.dao.IArticlesDao;
+import com.blog.entity.Articles;
 import com.blog.entity.Comments;
+import com.blog.entity.User;
+import com.blog.entity.UserRanking;
 
 import java.util.List;
 
@@ -15,9 +18,15 @@ public class articlesImp implements IArticles{
     }
 
     @Override
-    public List selectAllMd(int user_id) {
+    public int getCount(int user_id) {
         IArticlesDao dao = new ArticlesDaoImp();
-        List mdList = dao.selectAllMd(user_id);
+        return dao.getCount(user_id);
+    }
+
+    @Override
+    public List selectAllMd(int user_id,int page,int count) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List mdList = dao.selectAllMd(user_id,page,count);
         return mdList;
     }
 
@@ -124,5 +133,77 @@ public class articlesImp implements IArticles{
         IArticlesDao dao = new ArticlesDaoImp();
         List searchResult = dao.search(search);
         return searchResult;
+    }
+
+    @Override
+    public int updateUserProfilePhoto(String profilePhotoPath,int user_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        return dao.updateUserProfilePhoto(profilePhotoPath,user_id);
+    }
+
+    @Override
+    public List searchLimitId(String search, int user_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List searchResult = dao.searchLimitId(search, user_id);
+        return searchResult;
+    }
+
+    @Override
+    public List getUserRanking() {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List<UserRanking> userRanking = dao.getUserRanking();
+        return userRanking;
+    }
+
+    @Override
+    public List getHotRecommend() {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List hotRecommend = dao.getHotRecommend();
+        return hotRecommend;
+    }
+
+    @Override
+    public List getIndexMd() {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List indexMd = dao.getIndexMd();
+        return indexMd;
+    }
+
+    @Override
+    public List getIndexMdByClassFy(String classFy) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        List indexMdByClassFy = dao.getIndexMdByClassFy(classFy);
+        return indexMdByClassFy;
+    }
+
+    @Override
+    public int selectCommentCounter(int user_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        return dao.selectCommentCounter(user_id);
+    }
+
+    @Override
+    public int delete(int article_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        return dao.delete(article_id);
+    }
+
+    @Override
+    public Articles getArticles(int article_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        return dao.getArticles(article_id);
+    }
+
+    @Override
+    public int mdUpdate(int article_id, String article_title, String preview) {
+        IArticlesDao dao = new ArticlesDaoImp();
+        return dao.mdUpdate(article_id,article_title,preview);
+    }
+
+    @Override
+    public int getUserIdByMdId(int article_id) {
+        IArticlesDao dao = new ArticlesDaoImp();
+
+        return dao.getUserIdByMdId(article_id);
     }
 }

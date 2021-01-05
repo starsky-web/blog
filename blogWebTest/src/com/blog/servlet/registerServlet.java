@@ -45,8 +45,8 @@ public class registerServlet extends HttpServlet {
         User registerUser = iu.register(user);
         if (registerUser!=null){
             //非空则跳转主页，并登录
-            HttpSession session = request.getSession();
-            session.setAttribute("user",user);
+//            HttpSession session = request.getSession();
+//            session.setAttribute("user",user);
             //request.setAttribute("user",user);
 //            request.getRequestDispatcher("login.html").forward(request,response);
             response.sendRedirect("login.jsp");

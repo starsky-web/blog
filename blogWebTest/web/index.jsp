@@ -1,4 +1,6 @@
-<%@ page import="com.blog.entity.User" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.blog.entity.*" %>
+<%--
   Created by IntelliJ IDEA.
   User: WJF
   Date: 2020/11/12 0012
@@ -6,24 +8,59 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%List<UserRanking> userRankings = (List<UserRanking>) session.getAttribute("userRanking");%>
+<%List<hotRecommend> hotRecommends = (List<hotRecommend>) session.getAttribute("hotRecommend");%>
+<%List<indexMd> indexMds = (List<indexMd>) session.getAttribute("indexMd");%>
+<%List<indexMd> AIMD = (List<indexMd>) session.getAttribute("AIMD");%>
+<%List<indexMd> FrondMD = (List<indexMd>) session.getAttribute("FrondMD");%>
+<%List<indexMd> LifeMd = (List<indexMd>) session.getAttribute("LifeMd");%>
+<%indexImg indexImg = (com.blog.entity.indexImg) session.getAttribute("indexImg");%>
 <!DOCTYPE html>
 <html lang="ZH-cn">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="img/logo.ico">
-  <title>Title</title>
+  <title>Blog</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <script src="js/content/index.js" charset="UTF-8"></script>
   <script src="js/jquery-3.5.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <link href="css/content/index.css" rel="stylesheet" type="text/css">
   <link href="css/content/spn.css" rel="stylesheet" type="text/css">
   <script type="text/javascript" src="js/content/index.js"></script>
+  <script src="js/clickEffect.js"></script><%--点击特效--%>
+  <!--鼠标跟随-->
+  <span class="js-cursor-container"></span>
+  <script src="js/follow.js"></script>
+  <script>
+    function jump(id,mdName) {
+      $.ajax({
+        url:"otherMdShowServlet",
+        type:"post",
+        data:{
+          "id":id,
+          "mdName":mdName
+        },
+        success:function () {
+          // location.href="otherPersonShow.jsp";
+          window.open("otherPersonShow.jsp")
+        },
+        error:function () {
+
+        }
+      });
+    }
+  </script>
 
 
 </head>
+<style>
+  img{
+    border-radius: 4px;
+  }
+</style>
 <body>
 
 <!--  模仿网站:https://www.csdn.net/  -->
@@ -70,7 +107,7 @@
     <div class="col-lg-1 spn" id="spnTou">
       <% User user= (User) session.getAttribute("user");%>
       <% if (user==null){%>
-      <a href="login.html">登录</a>/<a href="register.jsp">注册</a>
+      <a href="login.jsp">登录</a>/<a href="register.jsp">注册</a>
       <%}else{%>
         <%if (user.getUser_profile_photo()!=null){%>
           <a><img src="UserFile/headPhoto/<%=user.getUser_profile_photo()%>" class="headPhoto" style="border-radius: 50%;width: 32px;height: 32px"></a>
@@ -123,29 +160,30 @@
     <!--顶部栏左侧结束-->
     <!--顶部栏中间-->
     <div id="center1" class="col-lg-8">
-      <div class="row" style="height: 50%;margin-top: 5px">
-        <div class="contentCenter"><a href="otherMdShowServlet?id=3&&mdName=01、安装.md">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
+      <div class="row" style="height: 50%;margin-top: 5px;">
+        <div class="contentCenter"><a href="searchServlet?search=python">python</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=Java">Java</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=架构">架构</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=人工智能">人工智能</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=移动开发">移动开发</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=程序人生">程序人生</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=计算机基础">计算机基础</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=物联网">物联网</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=前端">前端</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=区块链">区块链</a></div>
       </div>
-      <div class="row" style="height: 50%">
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
-        <div class="contentCenter"><a href="#">python</a></div>
+      <div class="row" style="height: 50%;">
+        <div class="contentCenter"><a href="searchServlet?search=游戏开发">游戏开发</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=运维">运维</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=5G">5G</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=音视频">音视频开发</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=研发管理">研发管理</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=信息安全">信息安全</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=考试认证">考试认证</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=数据库">数据库</a></div>
+        <div class="contentCenter"><a href="searchServlet?search=云计算">云计算</a></div>
+        <div class="contentCenter"><a>更多</a></div>
+
       </div>
 
     </div>
@@ -167,10 +205,10 @@
     <div id="hot" class="col-lg-12" ><img src="img/index/20200704010251.png" style="width: 35px;height:35px"><b>热门话题</b></div>
   </div>
   <div class="row">
-    <div  class="fourHot" id="fourHot1">#话题#<br>因未发项目奖金，一名程序员决定删代码泄愤</div>
-    <div  class="fourHot" id="fourHot2">#话题#<br>因未发项目奖金，一名程序员决定删代码泄愤</div>
-    <div  class="fourHot" id="fourHot3">#话题#<br>因未发项目奖金，一名程序员决定删代码泄愤</div>
-    <div  class="fourHot" id="fourHot4">#话题#<br>因未发项目奖金，一名程序员决定删代码泄愤</div>
+    <div  class="fourHot" id="fourHot1" style='background-image: url("img/index/hot/<%=indexImg.getHotTopic().get(0)%>.jpg")'><br><a onclick="jump('<%=indexMds.get(0).getUser_id()%>','<%=indexMds.get(0).getArticle_content()%>')"><%=indexMds.get(0).getArticle_title()%></a></div>
+    <div  class="fourHot" id="fourHot2" style="background-image: url('img/index/hot/<%=indexImg.getHotTopic().get(1)%>.jpg')"><br><a onclick="jump('<%=indexMds.get(1).getUser_id()%>','<%=indexMds.get(1).getArticle_content()%>')"><%=indexMds.get(1).getArticle_title()%></a></div>
+    <div  class="fourHot" id="fourHot3" style="background-image: url('img/index/hot/<%=indexImg.getHotTopic().get(2)%>.jpg')"><br><a onclick="jump('<%=indexMds.get(2).getUser_id()%>','<%=indexMds.get(2).getArticle_content()%>')"><%=indexMds.get(2).getArticle_title()%></a></div>
+    <div  class="fourHot" id="fourHot4" style="background-image: url('img/index/hot/<%=indexImg.getHotTopic().get(3)%>.jpg')"><br><a onclick="jump('<%=indexMds.get(3).getUser_id()%>','<%=indexMds.get(3).getArticle_content()%>')"><%=indexMds.get(3).getArticle_title()%></a></div>
   </div>
   <!--精选头条-->
   <!--精选头条左侧-->
@@ -179,191 +217,64 @@
   </div>
   <!--精选头条中间-->
   <div class="row">
-    <div  class="threeTou" id="threeTou1"><img src="img/index/20201120102939.jpg" style="width: 405px;height: 170px"><br>腾讯AI医学进展破解“秃头”难题，登Nature子刊！
-      <br>腾讯AI Lab采用“从头折叠”的蛋白质结构预测方法帮助解析了SRD5A2晶体结构 </div>
+    <div  class="threeTou" id="threeTou1"><a  onclick="jump('<%=indexMds.get(22).getUser_id()%>','<%=indexMds.get(22).getArticle_content()%>')"><img src="img/index/tou/left/<%=indexImg.getHeadLineLeft().get(0)%>.png" style="width: 405px;height: 170px;margin-bottom: 15px">
+     <span style="font-size: 15px;"> <%=indexMds.get(22).getArticle_title()%></span>
+    </a></div>
     <div  class="threeTou" id="threeTou2">
-      <div class="threeTou2-content"><img src="img/index/20201120104851.jpg" style="width: 100px;height: 100px;" align="left"><div style="height: 100px">深入剖析Linux内核反向映射机制<br>Soc芯片BringUp及系统软件开发大佬的分享。</div></div>
-      <div class="threeTou2-content"><img src="img/index/20201120104851.jpg" style="width: 100px;height: 100px;" align="left"><div style="height: 100px">深入剖析Linux内核反向映射机制<br>Soc芯片BringUp及系统软件开发大佬的分享。</div></div>
-      <div class="threeTou2-content"><img src="img/index/20201120104851.jpg" style="width: 100px;height: 100px;" align="left"><div style="height: 100px">深入剖析Linux内核反向映射机制<br>Soc芯片BringUp及系统软件开发大佬的分享。</div></div>
+      <div class="threeTou2-content"><a onclick="jump('<%=indexMds.get(23).getUser_id()%>','<%=indexMds.get(23).getArticle_content()%>')"> <img src="img/index/tou/right/<%=indexImg.getHeadLineRight().get(0)%>.jpg" style="width: 100px;height: 100px;" align="left"><div style="height: 100px"><%=indexMds.get(23).getArticle_title()%></div></a></div>
+      <div class="threeTou2-content"><a onclick="jump('<%=indexMds.get(24).getUser_id()%>','<%=indexMds.get(24).getArticle_content()%>')"><img src="img/index/tou/right/<%=indexImg.getHeadLineRight().get(1)%>.jpg" style="width: 100px;height: 100px;" align="left"><div style="height: 100px"><%=indexMds.get(24).getArticle_title()%></div></a></div>
+      <div class="threeTou2-content"><a onclick="jump('<%=indexMds.get(25).getUser_id()%>','<%=indexMds.get(25).getArticle_content()%>')"><img src="img/index/tou/right/<%=indexImg.getHeadLineRight().get(2)%>.jpg" style="width: 100px;height: 100px;" align="left"><div style="height: 100px"><%=indexMds.get(25).getArticle_title()%></div></a></div>
     </div>
     <!--精选头条右侧-->
     <div  class="threeTou" id="threeTou3"><!--直接设置了背景图--></div>
   </div>
-  <!--精彩视频-->
-  <div class="row">
-    <div id="videoPlate" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>精彩视频</b></div>
-    <div class="col-lg-3" style="text-align: left;line-height: 50px;padding-left: 20px"><b>视频热榜</b></div>
-  </div>
-  <!--两块内容-->
-  <div class="row">
-    <!--左侧视频区-->
-    <div  class="videoDisplay">
-      <!--上面一行四个视频-->
-      <div>
-        <div class="video" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-      </div>
-      <!--下面一行-->
-      <div>
-        <div class="video" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-      </div>
-    </div>
-    <!--右侧广告-->
-    <div  class="videoList">
-      <ol>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
 
-      </ol>
-    </div>
-  </div>
-
-  <!--技术团队，社区号-->
-  <div class="row">
-    <div id="community" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>技术团队/社区号</b></div>
-    <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>遇见Offer</b></div>
-  </div>
-  <!--两块内容-->
-  <div class="row">
-    <!--左侧内容区-->
-    <div  class="communityDisplay">
-      <!-- 一行 -->
-      <div style="margin-top: 5px">
-        <div class="communityGrid" style="margin-right: 15px;">
-          <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-          <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-        </div>
-        <div class="communityGrid">
-          <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-          <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-        </div>
-
-        <div style="margin-top: 5px">
-          <div class="communityGrid" style="margin-right: 15px;">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-          <div class="communityGrid">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-        </div>
-
-        <div style="margin-top: 5px">
-          <div class="communityGrid" style="margin-right: 15px;">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-          <div class="communityGrid">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-        </div>
-
-        <div style="margin-top: 5px">
-          <div class="communityGrid" style="margin-right: 15px;">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-          <div class="communityGrid">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-        </div>
-
-        <div style="margin-top: 5px">
-          <div class="communityGrid" style="margin-right: 15px;">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-          <div class="communityGrid">
-            <img src="img/index/3_ctrip_tech.jpg" width="48px" height="48px" style="border-radius: 50%;float: left">
-            <span style="float: left"><b>携程技术</b></span><span style="float: left;width: 80px;height: 20px"></span> |干货|携程cilium+BGP云原生网络实践<br>原创:118 &nbsp;&nbsp;&nbsp;粉丝146
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--右侧广告-->
-    <div  class="communityAd">
-      <img src="img/index/banner_offer@2x.png" style="height: 210px;width: 260px">
-      <div style="width: 50%;float: left;height: 130px">微软专场<br>引才入湘<br>腾讯招聘专场<br>paypal专场</div>
-      <div style="width: 50%;float: left;height: 130px">研发团队岗位介绍<br>拿一线工资<br>在鹅厂遇见未来<br>五年市值翻五倍!</div>
-    </div>
-  </div>
-
-  <!--会员精选-->
-  <div class="row">
-    <div id="vip" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>会员精选</b></div>
-    <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>领取权益</b></div>
-  </div>
-  <!--两块内容-->
-  <div class="row">
-    <!--左侧内容区-->
-    <div  class="vipDisplay">
-      <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-      </div>
-      <!--下面一行-->
-      <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-      </div>
-    </div>
-    <!--右侧广告-->
-    <div  class="vipAd">
-      <img src="img/index/20201113061718.jpg" style="width: 260px;height: 212px;margin-top: 5px">
-      <img src="img/index/20201113061718.jpg" style="width: 260px;height: 212px;margin-top: 5px ">
-    </div>
-  </div>
 
   <!--推荐专题-->
   <div class="row">
-    <div id="recommend" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>推荐专题</b></div>
-    <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>活动日历</b></div>
+    <div id="recommend" class="col-lg-9" ><img src="img/index/20200704010134.png" style="width: 35px;height:35px"><b>推荐专题</b></div>
+    <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>热门推荐</b></div>
   </div>
   <!--两块内容-->
   <div class="row">
     <!--左侧内容区-->
     <div  class="recommendDisplay">
       <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="pythonVideo" style="margin-left: 20px"><a onclick="jump('<%=indexMds.get(26).getUser_id()%>','<%=indexMds.get(26).getArticle_content()%>')"> <img src="img/index/recommend/<%=indexImg.getRecommend().get(0)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(26).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(27).getUser_id()%>','<%=indexMds.get(27).getArticle_content()%>')"><img src="img/index/recommend/<%=indexImg.getRecommend().get(1)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(27).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(28).getUser_id()%>','<%=indexMds.get(28).getArticle_content()%>')"><img src="img/index/recommend/<%=indexImg.getRecommend().get(2)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(28).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(29).getUser_id()%>','<%=indexMds.get(29).getArticle_content()%>')"><img src="img/index/recommend/<%=indexImg.getRecommend().get(3)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(29).getArticle_title()%></a></div>
       </div>
       <!--下面一行-->
       <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="pythonVideo" style="margin-left: 20px"><a onclick="jump('<%=indexMds.get(30).getUser_id()%>','<%=indexMds.get(30).getArticle_content()%>')"> <img src="img/index/recommend/<%=indexImg.getRecommend().get(4)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(30).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(31).getUser_id()%>','<%=indexMds.get(31).getArticle_content()%>')"><img src="img/index/recommend/<%=indexImg.getRecommend().get(5)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(31).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(32).getUser_id()%>','<%=indexMds.get(32).getArticle_content()%>')"><img src="img/index/recommend/<%=indexImg.getRecommend().get(6)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(32).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(33).getUser_id()%>','<%=indexMds.get(33).getArticle_content()%>')"><img src="img/index/recommend/<%=indexImg.getRecommend().get(7)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(33).getArticle_title()%></a></div>
       </div>
     </div>
     <!--右侧广告-->
-    <div  class="recommendAd">
-
+    <div  class="frontList">
+      <ul>
+        <%int a = 1;%>
+        <% for (hotRecommend hotRecommend : hotRecommends) {%>
+        <li class="frontHotLi">
+          <span style="float: left;margin-right: 5px;color: #20232c;padding-left: 8px;font-size: 16px;text-align: center;font-weight: bolder"><%=a%></span>
+          <a href="ToOtherPersonServlet?id=<%=hotRecommend.getUser_id()%>"><img src="UserFile/headPhoto/<%=hotRecommend.getUser_profile_photo()%>" style="height: 40px;width: 40px;border-radius: 50%;float: left"></a>
+          <div style="margin-left: 70px">
+            <a onclick="jump('<%=hotRecommend.getUser_id()%>','<%=hotRecommend.getArticle_title()%>.md')"><span><%=hotRecommend.getArticle_title()%></span><br></a>
+            <span style="color: #555666;font-size: 10px"><%=hotRecommend.getUser_name()%></span><sapn style="float: right"><span class="glyphicon glyphicon-eye-open" style="margin-right: 5px;color: #cfcfda"></span><%=hotRecommend.getArticle_views()%></sapn>
+          </div>
+        </li>
+        <%++a;%>
+        <%}%>
+      </ul>
     </div>
   </div>
 
   <!--python-->
   <div class="row">
-    <div id="python" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>python</b></div>
+    <div id="python" class="col-lg-9" ><img src="img/index/20200704010033.png" style="width: 35px;height:35px"><b>python</b></div>
     <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>博客周排行榜</b></div>
   </div>
   <!--两块内容-->
@@ -372,45 +283,45 @@
     <div  class="pythonDisplay">
       <!--上面一行四个视频-->
       <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="pythonVideo" style="margin-left: 20px"><a onclick="jump('<%=indexMds.get(35).getUser_id()%>','<%=indexMds.get(35).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(0)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(35).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(36).getUser_id()%>','<%=indexMds.get(36).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(1)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(36).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(37).getUser_id()%>','<%=indexMds.get(37).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(2)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(37).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(38).getUser_id()%>','<%=indexMds.get(38).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(3)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(38).getArticle_title()%></a></div>
       </div>
       <!--下面一行-->
       <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="pythonVideo" style="margin-left: 20px"><a onclick="jump('<%=indexMds.get(39).getUser_id()%>','<%=indexMds.get(39).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(4)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(39).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(40).getUser_id()%>','<%=indexMds.get(40).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(5)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(40).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(41).getUser_id()%>','<%=indexMds.get(41).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(6)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(41).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=indexMds.get(42).getUser_id()%>','<%=indexMds.get(42).getArticle_content()%>')"> <img src="img/index/python/<%=indexImg.getPythonImg().get(7)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(42).getArticle_title()%></a></div>
       </div>
     </div>
     <!--右侧列表-->
     <div  class="pythonList">
-      <ol>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
-        <li class="pythonHotLi"></li>
+      <ul>
+        <%int i = 1;%>
+        <% for (UserRanking userRanking : userRankings) {%>
+          <li class="pythonHotLi">
+            <span style="float: left;margin-right: 5px;color: #20232c;padding-left: 8px;font-size: 16px;text-align: center;font-weight: bolder"><%=i%></span>
+            <a href="ToOtherPersonServlet?id=<%=userRanking.getUser_id()%>"><img src="UserFile/headPhoto/<%=userRanking.getUser_profile_photo()%>" style="height: 40px;width: 40px;border-radius: 50%;float: left"></a>
+            <div style="margin-left: 70px">
+            <span style="height: 50%"><%=userRanking.getUser_name()%></span><br>
+            <img style="height:16px;width: 16px" src="img/heart.7682c5d8.png"> <span><%=userRanking.getLikeCounter()%></span>
+            </div>
+          </li>
+        <%++i;%>
+        <%}%>
 
-<<<<<<< HEAD
 
 
 
       </ul>
-=======
-      </ol>
->>>>>>> parent of 0dbee85... 完成
     </div>
   </div>
 
-  <!--程序人生-->
+  <!--程序人生--><%--5篇--%>
   <div class="row">
-    <div id="life" class="col-lg-12" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>程序人生</b></div>
+    <div id="life" class="col-lg-12" ><img src="img/index/20200704010012.png" style="width: 35px;height:35px"><b>程序人生</b></div>
   </div>
   <!--两块内容-->
   <div class="row">
@@ -419,24 +330,25 @@
       <!--左侧内容-->
       <div style="width: 440px;height: 100%;float: left;margin-right: 15px" class="listUlLi">
         <!--图片-->
-        <div style="width: 440px;height: 114px"><img src="img/index/20201118030109.jpg" style="height: 100px;width: 180px;float: left"><b>13岁创建RISC-V内核</b></div><br>
+        <div style="width: 440px;height: 114px"><a onclick="jump('<%=LifeMd.get(0).getUser_id()%>','<%=LifeMd.get(0).getArticle_content()%>')"> <img src="img/index/life/<%=indexImg.getLife().get(0)%>.jpg" style="height: 100px;width: 180px;float: left"><b><%=LifeMd.get(0).getArticle_title()%></b></a></div><br>
         <ul>
-          <li>漫画: 你们这些奇怪的代码</li>
-          <li>程序员的十年之痒</li>
-          <li>我在MySQL的那些年</li>
-          <li>2020年程序员节杂记</li>
-          <li>在美国小公司工作3年的感受</li>
+          <li><a onclick="jump('<%=indexMds.get(45).getUser_id()%>','<%=indexMds.get(45).getArticle_content()%>')"><%=indexMds.get(45).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=LifeMd.get(1).getUser_id()%>','<%=LifeMd.get(1).getArticle_content()%>')"><%=LifeMd.get(1).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=LifeMd.get(2).getUser_id()%>','<%=LifeMd.get(2).getArticle_content()%>')"><%=LifeMd.get(2).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=LifeMd.get(3).getUser_id()%>','<%=LifeMd.get(3).getArticle_content()%>')"><%=LifeMd.get(3).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(44).getUser_id()%>','<%=indexMds.get(44).getArticle_content()%>')"><%=indexMds.get(44).getArticle_title()%></a> </li>
         </ul>
       </div>
       <div style="width: 440px;height: 100%;float: left" class="listUlLi">
         <!--图片-->
-        <div style="width: 440px;height: 114px"><img src="img/index/20201118030109.jpg" style="height: 100px;width: 180px;float: left"><b>13岁创建RISC-V内核</b></div><br>
+        <div style="width: 440px;height: 114px"><a onclick="jump('<%=LifeMd.get(4).getUser_id()%>','<%=LifeMd.get(4).getArticle_content()%>')"><img src="img/index/life/<%=indexImg.getLife().get(1)%>.jpg" style="height: 100px;width: 180px;float: left"><b><%=LifeMd.get(4).getArticle_title()%></b></a></div><br>
         <ul>
-          <li>漫画: 你们这些奇怪的代码</li>
-          <li>程序员的十年之痒</li>
-          <li>我在MySQL的那些年</li>
-          <li>2020年程序员节杂记</li>
-          <li>在美国小公司工作3年的感受</li>
+          <li><a onclick="jump('<%=indexMds.get(46).getUser_id()%>','<%=indexMds.get(46).getArticle_content()%>')"><%=indexMds.get(46).getArticle_title()%></a> </li>
+          <li><a onclick="jump('<%=indexMds.get(47).getUser_id()%>','<%=indexMds.get(47).getArticle_content()%>')"><%=indexMds.get(47).getArticle_title()%></a> </li>
+          <li><a onclick="jump('<%=indexMds.get(48).getUser_id()%>','<%=indexMds.get(48).getArticle_content()%>')"><%=indexMds.get(48).getArticle_title()%></a> </li>
+          <li><a onclick="jump('<%=indexMds.get(49).getUser_id()%>','<%=indexMds.get(49).getArticle_content()%>')"><%=indexMds.get(49).getArticle_title()%></a> </li>
+          <li><a onclick="jump('<%=indexMds.get(52).getUser_id()%>','<%=indexMds.get(52).getArticle_content()%>')"><%=indexMds.get(52).getArticle_title()%></a> </li>
+
         </ul>
       </div>
     </div>
@@ -446,9 +358,9 @@
     </div>
   </div>
 
-  <!--大前端-->
+  <!--大前端--><%--8篇--%>
   <div class="row">
-    <div id="front" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>大前端</b></div>
+    <div id="front" class="col-lg-9" ><img src="img/index/20200724064659.png" style="width: 35px;height:35px"><b>大前端</b></div>
     <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>热门推荐</b></div>
   </div>
   <!--两块内容-->
@@ -457,39 +369,41 @@
     <div  class="frontDisplay">
       <!--上面一行四个视频-->
       <div>
-        <div class="pythonVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="pythonVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="pythonVideo" style="margin-left: 20px"><a onclick="jump('<%=FrondMD.get(0).getUser_id()%>','<%=FrondMD.get(0).getArticle_content()%>')"> <img src="img/index/front/<%=indexImg.getFrontImg().get(0)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(0).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=FrondMD.get(1).getUser_id()%>','<%=FrondMD.get(1).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(1)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(1).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=FrondMD.get(2).getUser_id()%>','<%=FrondMD.get(2).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(2)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(2).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=FrondMD.get(3).getUser_id()%>','<%=FrondMD.get(3).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(3)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(3).getArticle_title()%></a></div>
       </div>
-      <!--下面一行-->
+<%--      <!--下面一行-->--%>
       <div>
-        <div class="frontVideo" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="frontVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="frontVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="frontVideo"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="pythonVideo" style="margin-left: 20px"><a onclick="jump('<%=FrondMD.get(4).getUser_id()%>','<%=FrondMD.get(4).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(4)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(4).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=FrondMD.get(5).getUser_id()%>','<%=FrondMD.get(5).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(5)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(5).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=FrondMD.get(6).getUser_id()%>','<%=FrondMD.get(6).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(6)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(6).getArticle_title()%></a></div>
+        <div class="pythonVideo"><a onclick="jump('<%=FrondMD.get(7).getUser_id()%>','<%=FrondMD.get(7).getArticle_content()%>')"><img src="img/index/front/<%=indexImg.getFrontImg().get(7)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=FrondMD.get(7).getArticle_title()%></a></div>
       </div>
     </div>
     <!--右侧列表-->
     <div  class="frontList">
-      <ol>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-        <li class="frontHotLi"></li>
-
-
-      </ol>
+      <ul>
+        <%int j = 1;%>
+        <% for (hotRecommend hotRecommend : hotRecommends) {%>
+          <li class="frontHotLi">
+            <span style="float: left;margin-right: 5px;color: #20232c;padding-left: 8px;font-size: 16px;text-align: center;font-weight: bolder"><%=j%></span>
+            <a href="ToOtherPersonServlet?id=<%=hotRecommend.getUser_id()%>"><img src="UserFile/headPhoto/<%=hotRecommend.getUser_profile_photo()%>" style="height: 40px;width: 40px;border-radius: 50%;float: left"></a>
+            <div style="margin-left: 70px">
+            <a onclick="jump('<%=hotRecommend.getUser_id()%>','<%=hotRecommend.getArticle_title()%>.md')"><span><%=hotRecommend.getArticle_title()%></span><br></a>
+            <span style="color: #555666;font-size: 10px"><%=hotRecommend.getUser_name()%></span><sapn style="float: right"><span class="glyphicon glyphicon-eye-open" style="margin-right: 5px;color: #cfcfda"></span><%=hotRecommend.getArticle_views()%></sapn>
+            </div>
+          </li>
+        <%++j;%>
+        <%}%>
+      </ul>
     </div>
   </div>
 
-  <!--java-->
+  <!--java--><%--会查询到js--%>
   <div class="row">
-    <div id="java" class="col-lg-12" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>java</b></div>
+    <div id="java" class="col-lg-12" ><img src="img/index/20200724064607.png" style="width: 35px;height:35px"><b>java</b></div>
   </div>
   <!--两块内容-->
   <div class="row">
@@ -497,24 +411,25 @@
     <div  class="javaDisplay">
       <div style="width: 440px;height: 100%;float: left;margin-right: 15px" class="listUlLi">
         <!--图片-->
-        <div style="width: 440px;height: 114px"><img src="img/index/20201118030109.jpg" style="height: 100px;width: 180px;float: left"><b>13岁创建RISC-V内核</b></div><br>
+        <div style="width: 440px;height: 114px"><a onclick="jump('<%=indexMds.get(51).getUser_id()%>','<%=indexMds.get(51).getArticle_content()%>')"><img src="img/index/java/<%= indexImg.getJava().get(0)%>.jpg" style="height: 100px;width: 180px;float: left"><b><%=indexMds.get(51).getArticle_title()%></b></a></div><br>
         <ul>
-          <li>漫画: 你们这些奇怪的代码</li>
-          <li>程序员的十年之痒</li>
-          <li>我在MySQL的那些年</li>
-          <li>2020年程序员节杂记</li>
-          <li>在美国小公司工作3年的感受</li>
+          <%--重复--%>
+          <li><a onclick="jump('<%=indexMds.get(52).getUser_id()%>','<%=indexMds.get(52).getArticle_content()%>')"><%=indexMds.get(52).getArticle_title()%></a> </li>
+          <li><a onclick="jump('<%=indexMds.get(13).getUser_id()%>','<%=indexMds.get(13).getArticle_content()%>')"><%=indexMds.get(13).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(14).getUser_id()%>','<%=indexMds.get(14).getArticle_content()%>')"><%=indexMds.get(14).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(15).getUser_id()%>','<%=indexMds.get(15).getArticle_content()%>')"><%=indexMds.get(15).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(16).getUser_id()%>','<%=indexMds.get(16).getArticle_content()%>')"><%=indexMds.get(16).getArticle_title()%></a></li>
         </ul>
       </div>
       <div style="width: 440px;height: 100%;float: left" class="listUlLi">
         <!--图片-->
-        <div style="width: 440px;height: 114px"><img src="img/index/20201118030109.jpg" style="height: 100px;width: 180px;float: left"><b>13岁创建RISC-V内核</b></div><br>
+        <div style="width: 440px;height: 114px"><a onclick="jump('<%=indexMds.get(50).getUser_id()%>','<%=indexMds.get(50).getArticle_content()%>')"><img src="img/index/java/<%= indexImg.getJava().get(1)%>.jpg" style="height: 100px;width: 180px;float: left"><b><%=indexMds.get(50).getArticle_title()%></b></a></div><br>
         <ul>
-          <li>漫画: 你们这些奇怪的代码</li>
-          <li>程序员的十年之痒</li>
-          <li>我在MySQL的那些年</li>
-          <li>2020年程序员节杂记</li>
-          <li>在美国小公司工作3年的感受</li>
+          <li><a onclick="jump('<%=indexMds.get(17).getUser_id()%>','<%=indexMds.get(17).getArticle_content()%>')"><%=indexMds.get(17).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(18).getUser_id()%>','<%=indexMds.get(18).getArticle_content()%>')"><%=indexMds.get(18).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(19).getUser_id()%>','<%=indexMds.get(19).getArticle_content()%>')"><%=indexMds.get(19).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(20).getUser_id()%>','<%=indexMds.get(20).getArticle_content()%>')"><%=indexMds.get(20).getArticle_title()%></a></li>
+          <li><a onclick="jump('<%=indexMds.get(21).getUser_id()%>','<%=indexMds.get(21).getArticle_content()%>')"><%=indexMds.get(21).getArticle_title()%></a></li>
         </ul>
       </div>
     </div>
@@ -526,7 +441,7 @@
 
   <!--开源技术-->
   <div class="row">
-    <div id="openSource" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>开源技术</b></div>
+    <div id="openSource" class="col-lg-9" ><img src="img/index/20200724064948.png" style="width: 35px;height:35px"><b>开源技术</b></div>
     <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>热门推荐</b></div>
   </div>
   <!--两块内容-->
@@ -535,38 +450,41 @@
     <div  class="videoDisplay">
       <!--上面一行四个视频-->
       <div>
-        <div class="video" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="video" style="margin-left: 20px"><a onclick="jump('<%=indexMds.get(4).getUser_id()%>','<%=indexMds.get(4).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(0)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(4).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(6).getUser_id()%>','<%=indexMds.get(6).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(1)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(6).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(7).getUser_id()%>','<%=indexMds.get(7).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(2)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(7).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(8).getUser_id()%>','<%=indexMds.get(8).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(3)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(8).getArticle_title()%></a></div>
       </div>
       <!--下面一行-->
       <div>
-        <div class="video" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="video" style="margin-left: 20px"><a onclick="jump('<%=indexMds.get(9).getUser_id()%>','<%=indexMds.get(9).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(4)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(9).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(10).getUser_id()%>','<%=indexMds.get(10).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(5)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(10).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(11).getUser_id()%>','<%=indexMds.get(11).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(6)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(11).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(12).getUser_id()%>','<%=indexMds.get(12).getArticle_content()%>')"><img src="img/index/openSource/<%=indexImg.getOpenSourceImg().get(7)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(12).getArticle_title()%></a></div>
       </div>
     </div>
     <!--右侧广告-->
-    <div  class="videoList">
-      <ol>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-
-      </ol>
+    <div  class="frontList">
+      <ul>
+        <%int b = 1;%>
+        <% for (hotRecommend hotRecommend : hotRecommends) {%>
+        <li class="frontHotLi">
+          <span style="float: left;margin-right: 5px;color: #20232c;padding-left: 8px;font-size: 16px;text-align: center;font-weight: bolder"><%=b%></span>
+          <a href="ToOtherPersonServlet?id=<%=hotRecommend.getUser_id()%>"><img src="UserFile/headPhoto/<%=hotRecommend.getUser_profile_photo()%>" style="height: 40px;width: 40px;border-radius: 50%;float: left"></a>
+          <div style="margin-left: 70px">
+            <a onclick="jump('<%=hotRecommend.getUser_id()%>','<%=hotRecommend.getArticle_title()%>.md')"><span><%=hotRecommend.getArticle_title()%></span><br></a>
+            <span style="color: #555666;font-size: 10px"><%=hotRecommend.getUser_name()%></span><sapn style="float: right"><span class="glyphicon glyphicon-eye-open" style="margin-right: 5px;color: #cfcfda"></span><%=hotRecommend.getArticle_views()%></sapn>
+          </div>
+        </li>
+        <%++b;%>
+        <%}%>
+      </ul>
     </div>
   </div>
 
-  <!--人工智能-->
+  <!--人工智能--><%--7篇--%>
   <div class="row">
-    <div id="AI" class="col-lg-9" ><img src="img/index/20200704010214.png" style="width: 35px;height:35px"><b>人工智能</b></div>
+    <div id="AI" class="col-lg-9" ><img src="img/index/20200724064520.png" style="width: 35px;height:35px"><b>人工智能</b></div>
     <div class="col-lg-3" style="text-align: left;line-height: 35px;padding-left: 20px"><b>热门推荐</b></div>
   </div>
   <!--两块内容-->
@@ -575,34 +493,52 @@
     <div  class="videoDisplay">
       <!--上面一行四个视频-->
       <div>
-        <div class="video" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="video" style="margin-left: 20px"><a onclick="jump('<%=AIMD.get(0).getUser_id()%>','<%=AIMD.get(0).getArticle_content()%>')"> <img src="img/index/AI/<%=indexImg.getAI().get(0)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(0).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=AIMD.get(1).getUser_id()%>','<%=AIMD.get(1).getArticle_content()%>')"><img src="img/index/AI/<%=indexImg.getAI().get(1)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(1).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=AIMD.get(2).getUser_id()%>','<%=AIMD.get(2).getArticle_content()%>')"><img src="img/index/AI/<%=indexImg.getAI().get(2)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(2).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=AIMD.get(3).getUser_id()%>','<%=AIMD.get(3).getArticle_content()%>')"><img src="img/index/AI/<%=indexImg.getAI().get(3)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(3).getArticle_title()%></a></div>
       </div>
       <!--下面一行-->
       <div>
-        <div class="video" style="margin-left: 20px"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
-        <div class="video"><img src="img/index/1605691532138.png" style="height: 115px;width: 210px">CSS每天进步一点点</div>
+        <div class="video" style="margin-left: 20px"><a onclick="jump('<%=AIMD.get(4).getUser_id()%>','<%=AIMD.get(4).getArticle_content()%>')"> <img src="img/index/AI/<%=indexImg.getAI().get(4)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(4).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=AIMD.get(5).getUser_id()%>','<%=AIMD.get(5).getArticle_content()%>')"><img src="img/index/AI/<%=indexImg.getAI().get(5)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(5).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=AIMD.get(6).getUser_id()%>','<%=AIMD.get(6).getArticle_content()%>')"><img src="img/index/AI/<%=indexImg.getAI().get(6)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=AIMD.get(6).getArticle_title()%></a></div>
+        <div class="video"><a onclick="jump('<%=indexMds.get(34).getUser_id()%>','<%=indexMds.get(34).getArticle_content()%>')"><img src="img/index/AI/<%=indexImg.getAI().get(7)%>.jpg" style="height: 115px;width: 210px;margin-bottom: 15px"><%=indexMds.get(34).getArticle_title()%></a></div>
       </div>
     </div>
     <!--右侧广告-->
-    <div  class="videoList">
-      <ol>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-        <li class="videoHotLi"></li>
-
-      </ol>
+    <div  class="frontList">
+      <ul>
+        <%int c = 1;%>
+        <% for (hotRecommend hotRecommend : hotRecommends) {%>
+        <li class="frontHotLi">
+          <span style="float: left;margin-right: 5px;color: #20232c;padding-left: 8px;font-size: 16px;text-align: center;font-weight: bolder"><%=c%></span>
+          <a href="ToOtherPersonServlet?id=<%=hotRecommend.getUser_id()%>"><img src="UserFile/headPhoto/<%=hotRecommend.getUser_profile_photo()%>" style="height: 40px;width: 40px;border-radius: 50%;float: left"></a>
+          <div style="margin-left: 70px">
+            <a href="otherMdShowServlet?id=<%=hotRecommend.getUser_id()%>&mdName=<%=hotRecommend.getArticle_title()%>.md"><span><%=hotRecommend.getArticle_title()%></span><br></a>
+            <span style="color: #555666;font-size: 10px"><%=hotRecommend.getUser_name()%></span><sapn style="float: right"><span class="glyphicon glyphicon-eye-open" style="margin-right: 5px;color: #cfcfda"></span><%=hotRecommend.getArticle_views()%></sapn>
+          </div>
+        </li>
+        <%++c;%>
+        <%}%>
+      </ul>
     </div>
   </div>
+
+  <div class="row">
+    <div id="friend" class="col-lg-12" ><img src="img/index/20200724064520.png" style="width: 35px;height:35px"><b>友情链接</b></div>
+  </div>
+
+  <div class="row" style="margin-top: 20px;margin-left: 20px">
+    <div class="friendClass"><a href="https://www.bootcss.com/" class="fr">Bootstrap</a></div>
+    <div class="friendClass"><a href="https://www.csdn.net/" class="fr">CSDN</a></div>
+    <div class="friendClass"><a href="https://www.cnblogs.com/" class="fr">博客园</a></div>
+
+
+
+  </div>
+
+
 </div>
 
 
@@ -619,9 +555,6 @@
                 <span class="item active"><a href="#" class="nav-list">导航</a></span>
                 <span class="item active"><a href="#hot" class="nav-list">热门话题</a></span>
                 <span class="item active"><a href="#tou" class="nav-list">精选头条</a></span>
-                <span class="item active"><a href="#videoPlate" class="nav-list">精彩视频</a></span>
-                <span class="item active"><a href="#community" class="nav-list">技术团队</a></span>
-                <span class="item active"><a href="#vip" class="nav-list">会员精选</a></span>
                 <span class="item active"><a href="#recommend" class="nav-list">推荐专题</a></span>
                 <span class="item active"><a href="#python" class="nav-list">python</a></span>
                 <span class="item active"><a href="#life" class="nav-list">程序人生</a></span>

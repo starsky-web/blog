@@ -6,6 +6,7 @@ import com.blog.service.IArticles;
 import com.blog.service.IUser;
 import com.blog.service.articlesImp;
 import com.blog.service.userImp;
+import com.blog.util.MdUtil;
 import com.blog.util.UserUtil;
 
 import javax.servlet.ServletException;
@@ -34,18 +35,36 @@ public class ToOtherPersonServlet extends HttpServlet {
 
         //获取id
         String id = request.getParameter("id");
+        System.out.println("获取的id值="+id);
         int user_id = Integer.parseInt(id);
 
         //获取用户对象并存入session
-        User hostUser = iu.getHostUser(Integer.parseInt(id));
+        User hostUser = iu.getHostUser(user_id);
         request.setAttribute("HostUser",hostUser);
 
         //获取用户展示信息
         PersonInfo info = UserUtil.getPersonInfo(user_id);
         session.setAttribute("HostInfo",info);
 
+        int Count = ia.getCount(user_id);//获取md文章总数
+        //获取页数
+        int page = 1;
+        try{
+            page = Integer.parseInt(request.getParameter("page"));
+        }catch (Exception e){
+            page=1;
+        }
+        System.out.println("当前页"+page);
+
         //获取该用户所有文章并存入session
-        List otherAllMd = ia.selectAllMd(Integer.parseInt(id));
+        List otherAllMd = ia.selectAllMd(user_id,page, MdUtil.PAGE_COUNT);
+        int i = Count/MdUtil.PAGE_COUNT;
+        int j = Count%MdUtil.PAGE_COUNT;
+        if (j>0) {
+            i++;
+        }
+        System.out.println("总页数="+i);
+        session.setAttribute("pages",i);
         session.setAttribute("otherAllMd",otherAllMd);
         request.getRequestDispatcher("otherPerson.jsp").forward(request,response);
     }

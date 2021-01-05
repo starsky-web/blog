@@ -2,18 +2,35 @@
 <%@ page import="com.blog.entity.User" %>
 <%@ page import="com.blog.entity.PersonInfo" %>
 <%@ page import="com.blog.entity.Comments" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: WJF
   Date: 2020/12/7 0007
   Time: 19:51
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp"%>
 <%PersonInfo info = (PersonInfo) session.getAttribute("HostInfo");%>
-<%List<Comments> comments = (List<Comments>) request.getAttribute("comments");%>
-<%User HostUser = (User) request.getAttribute("HostUser");%>
-<%String mdName = (String) request.getAttribute("mdName");%>
+<%List<Comments> comments = (List<Comments>) session.getAttribute("comments");%>
+<%User HostUser = (User) session.getAttribute("HostUser");%>
+<%String mdName = (String) session.getAttribute("mdName");%>
+<%
+    boolean hotmdExist = false;
+    boolean newCommentsExist = false;
+    boolean newMdExist = false;
+    if (info!=null){
+        if (info.getHotMd()!=null&&info.getHotMd().size()>0){
+            hotmdExist=true;
+        }
+        if (info.getNewComments()!=null&&info.getNewComments().size()>0){
+            newCommentsExist = true;
+        }
+        if (info.getNewMd()!=null&&info.getNewMd().size()>0){
+            newMdExist = true;
+        }
+    }
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -25,9 +42,24 @@
     <link href="css/content/comment.css" rel="stylesheet" type="text/css">
     <link href="css/content/person.css" rel="stylesheet" type="text/css">
     <link href="css/content/mdUtil.css" rel="stylesheet" type="text/css">
+    <link href="css/content/foot-1.css" rel="stylesheet" type="text/css">
     <link href="css/content/spn.css" rel="stylesheet" type="text/css">
     <script src="js/content/person.js"></script>
-    <title>Title</title>
+    <script src="js/clickEffect.js"></script><%--点击特效--%>
+    <script src="js/yinhua.js"></script><%--樱花--%>
+    <!--鼠标跟随-->
+    <span class="js-cursor-container"></span>
+    <script src="js/follow.js"></script>
+    <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon"/>
+    <title>Blog</title>
+    <style>
+        .fixed{
+            position: fixed;
+            top:10px;
+            width: 285px;
+            /*left: 100px;*/
+        }
+    </style>
     <script>
         function ajax() {
             //使用$.ajax()发送异步请求
@@ -46,8 +78,54 @@
                 dataType:"text"//设置接收到的响应数据的格式
             });
         }
+        function sub(id,maName) {
+            $.ajax({
+                url:"otherMdShowServlet",
+                type:"post",
+                data:{
+                    "id":id,
+                    "mdName":maName
+                },
+                success:function () {
+                    location.href="otherPersonShow.jsp";
+                },
+                error:function () {
+
+                }
+            });
+        }
 
     </script>
+    <script>
+        function searchLimitId() {
+            $.ajax({
+                url:"searchLimitIdServlet",//请求路径
+                type:"post",//请求方式
+                //data:"username=jack",//请求参数
+                data:{
+                    "SLI":$('#SLI').val(),
+                    "id":"<%=HostUser.getUser_id()%>"
+                },
+                success:function (data) {
+                    location.href="resultDisplay.jsp";
+                },//响应成功后的回调函数
+                error:function () {
+
+                },//表示如果请求响应出现错误，会执行的回调函数
+                dataType:"text"//设置接收到的响应数据的格式
+            });
+        }
+    </script>
+    <style>
+        #hotText a{
+            text-decoration: none;
+            color: #0f0f0f;
+        }
+        #hotText a:hover{
+            text-decoration: none;
+            color: #0f0f0f;
+        }
+    </style>
 </head>
 <body>
 <%--导航栏--%>
@@ -59,25 +137,39 @@
         <div class="col-lg-1 spn"><a href="#">关于</a></div>
         <div class="col-lg-5 spn find">
             <div class="input-group">
-                <input id="input1" type="text" value placeholder="博客点击开始" autocomplete="off" onkeydown="onKeyDown(event)">
-                <button id="shosuo"></button>
-
+                <input id="input1" type="text" value placeholder="博客点击开始" autocomplete="off" name="search">
+                <button id="shosuo" onclick="search()"></button>
                 </span>
             </div>
             <!--搜索处理，放在js中-->
-            <!--            <script>-->
-            <!--                /* 搜索框  */-->
-            <!--                function onKeyDown(event){-->
-            <!--                    //执行搜索点击事件-->
+            <script>
+                function search(){
+                    <!--执行搜索点击事件-->
+                    $.ajax({
+                        url:"searchServlet",//请求路径
+                        type:"post",//请求方式
+                        //data:"username=jack",//请求参数
+                        data:{
+                            "search":$('#input1').val()
+                        },
+                        success:function (data) {
 
-            <!--                }-->
-            <!--            </script>-->
+                            location.href="resultDisplay.jsp";
+
+                        },//响应成功后的回调函数
+                        error:function () {
+
+                        },//表示如果请求响应出现错误，会执行的回调函数
+                        dataType:"text"//设置接收到的响应数据的格式
+                    });
+                }
+            </script>
         </div>
         <div class="col-lg-1 spn"><a href="mdEditor.jsp" class="a1"><i class="li1"></i>创作中心</a></div>
         <div class="col-lg-1 spn" id="spnTou">
             <%User user = (User) session.getAttribute("user");%>
             <% if (user==null){%>
-            <a href="login.html">登录</a>/<a href="register.jsp">注册</a>
+            <a href="login.jsp">登录</a>/<a href="register.jsp">注册</a>
             <%}else{%>
             <%if (user.getUser_profile_photo()!=null){%>
             <a><img src="UserFile/headPhoto/<%=user.getUser_profile_photo()%>" class="headPhoto" style="border-radius: 50%;width: 32px;height: 32px"></a>
@@ -111,7 +203,7 @@
                 "userId":"<%=user.getUser_id()%>"
             },
             success:function (data) {
-
+                location.reload();
             },
             error:function () {
 
@@ -119,6 +211,7 @@
             dataType:"text"
         });
     }
+
 </script>
 <%}%>
 <div id="content" class="container-fluid no-gutter">
@@ -140,127 +233,93 @@
                 <div class="infoTop">
                     <div class="infoUnit" style="margin-left: 10px">
                         <div class="infoUnitNum">
+                            <% try{%>
                             <%=info.getRanking()%>
+                            <% } catch (NullPointerException e){%>
+                            0
+                            <%}%>
                         </div>
                         <div class="infoUnitText">排名</div>
                     </div>
                     <div class="infoUnit">
                         <div class="infoUnitNum">
+                            <% try{%>
                             <%=info.getCountView()%>
+                            <% } catch (NullPointerException e){%>
+                            0
+                            <%}%>
                         </div>
                         <div class="infoUnitText">访问</div>
                     </div>
                     <div class="infoUnit">
                         <div class="infoUnitNum">
+                            <% try{%>
                             <%=info.getLikeCount()%>
+                            <% } catch (NullPointerException e){%>
+                            0
+                            <%}%>
                         </div>
                         <div class="infoUnitText">获赞</div>
                     </div>
                     <div class="infoUnit">
                         <div class="infoUnitNum">
+                            <% try{%>
                             <%=info.getBlogCount()%>
+                            <% } catch (NullPointerException e){%>
+                            0
+                            <%}%>
                         </div>
                         <div class="infoUnitText">总数</div>
                     </div>
                     <div class="infoUnit">
                         <div class="infoUnitNum">
-                            67
+                            <% try{%>
+                            <%=info.getCommentCounter()%>
+                            <% } catch (NullPointerException e){%>
+                            0
+                            <%}%>
                         </div>
-                        <div class="infoUnitText">原创</div>
+                        <div class="infoUnitText">评论</div>
                     </div>
                 </div>
-                <div class="infoBottom">
-                    <div class="infoUnit" style="margin-left: 10px">
-                        <div class="infoUnitNum">
-                            67
-                        </div>
-                        <div class="infoUnitText">原创</div>
-                    </div>
-                    <div class="infoUnit">
-                        <div class="infoUnitNum">
-                            67
-                        </div>
-                        <div class="infoUnitText">原创</div>
-                    </div>
-                    <div class="infoUnit">
-                        <div class="infoUnitNum">
-                            67
-                        </div>
-                        <div class="infoUnitText">原创</div>
-                    </div>
-                    <div class="infoUnit">
-                        <div class="infoUnitNum">
-                            67
-                        </div>
-                        <div class="infoUnitText">原创</div>
-                    </div>
-                    <div class="infoUnit">
-                        <div class="infoUnitNum">
-                            67
-                        </div>
-                        <div class="infoUnitText">原创</div>
-                    </div>
-                </div>
+                <div class="item-rank"> </div>
                 <!--徽章-->
                 <div class="emblem">
-                    <span><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
-                    <span><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
-                    <span><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
-                    <span><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
-                    <span><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
+                    <span class="infoUnit1"><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
+                    <span class="infoUnit1"><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
+                    <span class="infoUnit1"><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
+                    <span class="infoUnit1"><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
+                    <span class="infoUnit1"><img src="img/person/qiandao50@240.png" class="badgeUnit"> </span>
                 </div>
 
             </div>
             <div id="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
+                    <input type="text" class="form-control" placeholder="Search for..." id="SLI">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    <button class="btn btn-default" type="button" onclick="searchLimitId()"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </div>
             </div>
             <!--热门文章-->
-
+            <%if (hotmdExist){%>
             <div id="hotText">
                 <div class="title">
                     热门文章
                 </div>
                 <% for (Articles hotMd : info.getHotMd()) {%>
                 <div class="hotTextUnit">
-                    <a href="mdShowServlet?mdName=<%=hotMd.getArticle_content()%>">
-                        <%=hotMd.getArticle_title()%><span class="glyphicon glyphicon-eye-open hotEye"><%=hotMd.getArticle_views()%></span>
+                    <a onclick="sub('<%=hotMd.getUser_id()%>','<%=hotMd.getArticle_content()%>')">
+                        <%=hotMd.getArticle_title()%><img class="read1-1" src="img/yanjing.png" alt><%=hotMd.getArticle_views()%>
                     </a>
                 </div>
                 <%}%>
             </div>
+            <%}%>
             <!--分类专栏-->
-            <div id="classify">
-                <div class="title">
-                    分类专类
-                </div>
-                <div class="classifyUnit">
-                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
-                    javaScript<span class="classifyUnitNum">5篇</span>
-                </div>
-                <div class="classifyUnit">
-                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
-                    javaScript<span class="classifyUnitNum">5篇</span>
-                </div>
-                <div class="classifyUnit">
-                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
-                    javaScript<span class="classifyUnitNum">5篇</span>
-                </div>
-                <div class="classifyUnit">
-                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
-                    javaScript<span class="classifyUnitNum">5篇</span>
-                </div>
-                <div class="classifyUnit">
-                    <img src="img/person/20201014180756913.png" class="classifyUnitImg">
-                    javaScript<span class="classifyUnitNum">5篇</span>
-                </div>
-
-            </div>
             <!--最新评论-->
+            <div id="f3">
+            <%if (newCommentsExist){%>
             <div id="newComment">
                 <div class="title">
                     最新评论
@@ -275,38 +334,57 @@
                     <div class="newCommentUnitBottom"><%=newComment.getComment_content()%></div>
                 </div>
                 <%}%>
+
             </div>
+            <%}%>
             <!--最新文章-->
+            <%if (newMdExist){%>
             <div id="newText">
                 <div class="title">
                     最新文章
                 </div>
                 <% for (Articles newMd : info.getNewMd()) {%>
                 <div class="newTextUnitTop">
-                    <%=newMd.getArticle_title()%>
+                    <a onclick="sub('<%=newMd.getUser_id()%>','<%=newMd.getArticle_content()%>')" class="newTextUnitTopA">
+                        <%=newMd.getArticle_title()%>
+                    </a>
                 </div>
                 <%}%>
-                <hr style="border-top:0.5px dashed #b1b1b1;" width="100%" color="#b1b1b1" size=1>
-                <div class="newTextUnitBottom">
-                    <div id="year">2020</div>
-                    <div class="newTextUnitBottomUnit">
-                        <div class="mouth">6月</div>
-                        <div class="num">13篇</div>
-                    </div>
-                    <div class="newTextUnitBottomUnit">
-                        <div class="mouth">6月</div>
-                        <div class="num">13篇</div>
-                    </div>
-                    <div class="newTextUnitBottomUnit">
-                        <div class="mouth">6月</div>
-                        <div class="num">13篇</div>
-                    </div>
-                    <div class="newTextUnitBottomUnit">
-                        <div class="mouth">6月</div>
-                        <div class="num">13篇</div>
-                    </div>
-                </div>
+<%--                <hr style="border-top:0.5px dashed #b1b1b1;" width="100%" color="#b1b1b1" size=1>--%>
+<%--                <div class="newTextUnitBottom">--%>
+<%--                    <div id="year">2020</div>--%>
+<%--                    <div class="newTextUnitBottomUnit">--%>
+<%--                        <div class="mouth">6月</div>--%>
+<%--                        <div class="num">13篇</div>--%>
+<%--                    </div>--%>
+<%--                    <div class="newTextUnitBottomUnit">--%>
+<%--                        <div class="mouth">6月</div>--%>
+<%--                        <div class="num">13篇</div>--%>
+<%--                    </div>--%>
+<%--                    <div class="newTextUnitBottomUnit">--%>
+<%--                        <div class="mouth">6月</div>--%>
+<%--                        <div class="num">13篇</div>--%>
+<%--                    </div>--%>
+<%--                    <div class="newTextUnitBottomUnit">--%>
+<%--                        <div class="mouth">6月</div>--%>
+<%--                        <div class="num">13篇</div>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
             </div>
+            <%}%>
+        </div>
+        <script>
+            var offsetT=$("#f3").offset().top;
+            $(window).scroll(function(){
+                console.log(offsetT)
+                var scrollT=$(document).scrollTop();
+                if(scrollT>=offsetT){
+                    $("#f3").addClass("fixed")
+                }else{
+                    $("#f3").removeClass("fixed")
+                }
+            })
+        </script>
         </div>
         <!--        <script>-->
         <!--            $('.js-affix').affix({-->
@@ -320,7 +398,7 @@
 
 
         <div id="right" class="col-lg-8" >
-            <div id="md">
+            <div id="md" style="min-height: 670px">
             <%@include file="mdShow.jsp"%>
             </div>
             <div id="mdUtil">
@@ -359,7 +437,7 @@
                 <div class="comment-box">
                     <img src="UserFile/headPhoto/<%=user.getUser_profile_photo()%>" class="comment-box-headPhoto">
 
-                    <textarea class="comment-box-textarea">评论</textarea>
+                    <input class="comment-box-textarea" placeholder="请输入评论">
                     <button onclick="comment()">发表</button>
 
                 </div>
@@ -378,19 +456,18 @@
                     </div>
                     <%}%>
                 </div>
-
             </div>
             <%} else{%>
             <div class="comment-box">
-                <a href="login.html">登录</a>
+                <a href="login.jsp">登录</a>
 
-                <textarea class="comment-box-textarea">请先登录</textarea>
+                <input class="comment-box-textarea" placeholder="请先登录">
                 <button>发表</button>
 
             </div>
             <%}%>
-            <div class="foot">
-                页脚
+            <div class="foot--">
+                <%@include file="foot-min.jsp"%>
             </div>
         </div>
     </div>

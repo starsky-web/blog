@@ -10,6 +10,7 @@ public class PersonInfo {
     private List<Articles> NewMd;
     private int ranking;//排名
     private List<Comments> newComments;
+    private int CommentCounter;
 
     @Override
     public String toString() {
@@ -21,10 +22,11 @@ public class PersonInfo {
                 ", NewMd=" + NewMd +
                 ", ranking=" + ranking +
                 ", newComments=" + newComments +
+                ", CommentCounter=" + CommentCounter +
                 '}';
     }
 
-    public PersonInfo(int blogCount, int likeCount, List<Articles> hotMd, int countView, List<Articles> newMd, int ranking, List<Comments> newComments) {
+    public PersonInfo(int blogCount, int likeCount, List<Articles> hotMd, int countView, List<Articles> newMd, int ranking, List<Comments> newComments, int commentCounter) {
         this.blogCount = blogCount;
         this.likeCount = likeCount;
         HotMd = hotMd;
@@ -32,6 +34,7 @@ public class PersonInfo {
         NewMd = newMd;
         this.ranking = ranking;
         this.newComments = newComments;
+        CommentCounter = commentCounter;
     }
 
     public PersonInfo() {
@@ -91,5 +94,13 @@ public class PersonInfo {
 
     public void setNewComments(List<Comments> newComments) {
         this.newComments = newComments;
+    }
+
+    public int getCommentCounter() {
+        return CommentCounter;
+    }
+
+    public void setCommentCounter(int commentCounter) {
+        CommentCounter = commentCounter;
     }
 }

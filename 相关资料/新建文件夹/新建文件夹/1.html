@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            height: 2000px;
+            background-color: aqua;
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: lawngreen;
+        }
+        .fixed{
+            position: fixed;
+            top:50px;
+            left: 50px;
+        }
+    </style>
+    <script src="jquery-3.5.1.js"></script>
+</head>
+<body>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    
+    <div></div>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+    <h1>test</h1>
+
+    <script>
+        // div距离文档顶部的距离
+        var offsetT=$("div").offset().top;
+        $(window).scroll(function(){
+            console.log(offsetT)
+            var scrollT=$(document).scrollTop();
+            if(scrollT>=offsetT){
+                $("div").addClass("fixed")
+            }else{
+                $("div").removeClass("fixed")
+            }
+        })
+    </script>
+</body>
+</html>

@@ -47,11 +47,11 @@ public class mdUploadServlet extends HttpServlet {
         PrintWriter pw = response.getWriter();
         if (storeMdReturn!=0){
             System.out.println("存储成功");
-            pw.print("<script>alert('上传成功')</script>");
+
 
         }else{
             System.out.println("存储失败");
-            pw.print("<script>alert('上传失败')</script>");
+
         }
 
 

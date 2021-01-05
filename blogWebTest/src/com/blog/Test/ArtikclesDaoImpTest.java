@@ -19,14 +19,14 @@ public class ArtikclesDaoImpTest {
         int i = dao.storeMd("sdsd",2,null);
         Assert.assertEquals(1,i);
     }
-    @Test
-    public void testselectAllMd(){
-        IArticlesDao dao = new ArticlesDaoImp();
-        List<Articles> a = dao.selectAllMd(2);
-        boolean b = false;
-        if(a!=null){
-            b=true;
-        }
-        Assert.assertEquals(true,b);
-    }
+//    @Test
+//    public void testselectAllMd(){
+//        IArticlesDao dao = new ArticlesDaoImp();
+//        List<Articles> a = dao.selectAllMd(2);
+//        boolean b = false;
+//        if(a!=null){
+//            b=true;
+//        }
+//        Assert.assertEquals(true,b);
+//    }
 }

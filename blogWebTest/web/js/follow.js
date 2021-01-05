@@ -3,7 +3,8 @@
     var possibleColors = ["#D61C59", "#E7D84B", "#1B8798"]
     var width = window.innerWidth;
     var height = window.innerHeight;
-    var cursor = { x: width / 2, y: width / 2 };
+    // var cursor = { x: width / 2, y: width / 2 };
+    var cursor = { x: width, y: width};
     var particles = [];
 
     function init() {

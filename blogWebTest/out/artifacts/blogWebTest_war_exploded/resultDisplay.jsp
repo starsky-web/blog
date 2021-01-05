@@ -6,11 +6,13 @@
   Time: 21:22
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="error.jsp"%>
 <%List<Articles>  searchResults= (List<Articles>) session.getAttribute("searchResult");%>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="shortcut icon" href="img/logo.ico">
+    <title>Blog</title>
+    <link href="css/content/resultDisplay.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <style>
@@ -53,12 +55,30 @@
         margin-left: 15px;
     }
 </style>
+<script>
+    function sub(id,mdName) {
+        $.ajax({
+            url:"otherMdShowServlet",
+            type:"post",
+            data:{
+                "id":id,
+                "mdName":mdName
+            },
+            success:function () {
+                location.href="otherPersonShow.jsp";
+            },
+            error:function () {
+
+            }
+        });
+    }
+</script>
 <%@include file="span.jsp"%>
 <div class="content">
 <%if (searchResults!=null){ %>
 <%for (Articles searchResult : searchResults) {%>
    <div class="searchUnit">
-       <div class="searchTitle"><a href="otherMdShowServlet?id=<%=searchResult.getUser_id()%>&&mdName=<%=searchResult.getArticle_content()%>"><%=searchResult.getArticle_title()%></a> </div>
+       <div class="searchTitle"><a onclick="sub('<%=searchResult.getUser_id()%>','<%=searchResult.getArticle_content()%>')"><%=searchResult.getArticle_title()%></a> </div>
         <div class="searchUnitText">
             <%=searchResult.getArticle_preview()%>
         </div>
@@ -69,7 +89,9 @@
     <hr style="border-top:0.5px dashed #b1b1b1;" width="100%" color="#b1b1b1" size=1>
  <%}%>
 <%}else{ %>
-    啥也不是
+    <div class="searchUnit">
+       <p style="color: #0f0f0f">啥也不是</p>
+    </div>
 <%}%>
 </div>
 <%@include file="foot.jsp"%>

@@ -7,183 +7,40 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<html lang="zh-cn">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <link href="css/content/register.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="js/content/register.js"></script>
     <link href="css/content/login.css" rel="stylesheet" type="text/css">
     <link href="css/content/spn.css" rel="stylesheet" type="text/css">
-    <title>Title</title>
+    <script src="js/clickEffect.js"></script><%--点击特效--%>
+    <!--鼠标跟随-->
+    <span class="js-cursor-container"></span>
+    <script src="js/follow.js"></script>
+    <link rel="shortcut icon" href="img/logo.ico" type="image/x-icon"/>
+    <title>Register</title>
+    <style>
+        /*.high{color: red;*/
+        /*    !*float: right;*!*/
+        /*}*/
+        .msg{
+            font-size: 10px;
+        }
+        /*.onError{ color: red; }*/
+        /*.onSuccess{ color: green; }*/
+    </style>
 </head>
 <body>
-
-<script>
-    function DateSelector(selYear, selMonth, selDay) {//定义函数
-        this.selYear = selYear;
-        this.selMonth = selMonth;
-        this.selDay = selDay;
-        this.selYear.Group = this;
-        this.selMonth.Group = this;
-// 给年份、月份下拉菜单添加处理onchange事件的函数
-        if (window.document.all != null) // IE
-        {
-            this.selYear.attachEvent("onchange", DateSelector.Onchange);
-            this.selMonth.attachEvent("onchange", DateSelector.Onchange);
-        }
-        else // Firefox
-        {
-            this.selYear.addEventListener("change", DateSelector.Onchange, false);
-            this.selMonth.addEventListener("change", DateSelector.Onchange, false);
-        }
-        if (arguments.length == 4) // 如果传入参数个数为4，最后一个参数必须为Date对象
-            this.InitSelector(arguments[3].getFullYear(), arguments[3].getMonth() + 1, arguments[3].getDate());
-        else if (arguments.length == 6) // 如果传入参数个数为6，最后三个参数必须为初始的年月日数值
-            this.InitSelector(arguments[3], arguments[4], arguments[5]);
-        else // 默认使用当前日期
-        {
-            var dt = new Date();
-            this.InitSelector(dt.getFullYear(), dt.getMonth() + 1, dt.getDate());
-        }
-    }
-    // 增加一个最小年份的属性--最老年份
-    DateSelector.prototype.MinYear = 1960;
-    // 增加一个最大年份的属性--最新年份，即当前时期getFullYear()
-    DateSelector.prototype.MaxYear = (new Date()).getFullYear();
-    // 初始化年份
-    DateSelector.prototype.InitYearSelect = function () {
-// 循环添加OPION元素到年份select对象中
-        for (var i = this.MaxYear; i >= this.MinYear; i--) {
-// 新建一个OPTION对象
-            var op = window.document.createElement("OPTION");
-// 设置OPTION对象的值
-            op.value = i;
-// 设置OPTION对象的内容
-            op.innerHTML = i;
-// 添加到年份select对象
-            this.selYear.appendChild(op);
-        }
-    }
-    // 初始化月份
-    DateSelector.prototype.InitMonthSelect = function () {
-// 循环添加OPION元素到月份select对象中
-        for (var i = 1; i < 13; i++) {
-// 新建一个OPTION对象
-            var op = window.document.createElement("OPTION");
-// 设置OPTION对象的值
-            op.value = i;
-// 设置OPTION对象的内容
-            op.innerHTML = i;
-// 添加到月份select对象
-            this.selMonth.appendChild(op);
-        }
-    }
-    // 根据年份与月份获取当月的天数
-    DateSelector.DaysInMonth = function (year, month) {
-        var date = new Date(year, month, 0);
-        return date.getDate();
-    }
-    // 初始化天数
-    DateSelector.prototype.InitDaySelect = function () {
-// 使用parseInt函数获取当前的年份和月份
-        var year = parseInt(this.selYear.value);
-        var month = parseInt(this.selMonth.value);
-// 获取当月的天数
-        var daysInMonth = DateSelector.DaysInMonth(year, month);
-// 清空原有的选项
-        this.selDay.options.length = 0;
-// 循环添加OPION元素到天数select对象中
-        for (var i = 1; i <= daysInMonth; i++) {
-// 新建一个OPTION对象
-            var op = window.document.createElement("OPTION");
-// 设置OPTION对象的值
-            op.value = i;
-// 设置OPTION对象的内容
-            op.innerHTML = i;
-// 添加到天数select对象
-            this.selDay.appendChild(op);
-        }
-    }
-    // 处理年份和月份onchange事件的方法，它获取事件来源对象（即selYear或selMonth）
-    // 并调用它的Group对象（即DateSelector实例，请见构造函数）提供的InitDaySelect方法重新初始化天数
-    // 参数e为event对象
-    DateSelector.Onchange = function (e) {
-        var selector = window.document.all != null ? e.srcElement : e.target;
-        selector.Group.InitDaySelect();
-    }
-    // 根据参数初始化下拉菜单选项
-    DateSelector.prototype.InitSelector = function (year, month, day) {
-// 由于外部是可以调用这个方法，因此我们在这里也要将selYear和selMonth的选项清空掉
-// 另外因为InitDaySelect方法已经有清空天数下拉菜单，因此这里就不用重复工作了
-        this.selYear.options.length = 0;
-        this.selMonth.options.length = 0;
-// 初始化年、月
-        this.InitYearSelect();
-        this.InitMonthSelect();
-// 设置年、月初始值
-        this.selYear.selectedIndex = this.MaxYear - year;
-        this.selMonth.selectedIndex = month - 1;
-// 初始化天数
-        this.InitDaySelect();
-// 设置天数初始值
-        this.selDay.selectedIndex = day - 1;
-    }
-</script>
 <!-- 模仿网站:https://passport.csdn.net/login?code=public  二维码的位置直接写表单即可 -->
 <!--导航栏-->
-<div class="container-fluid spnContent" style="padding-top: 5px">
-    <div class="row">
-        <div class="col-lg-1 spn"></div>
-        <div class="col-lg-1 spn"><a href="#"><img src="img/blackLogo.png"> </a></div>
-        <div class="col-lg-1 spn"><a href="#">首页</a></div>
-        <div class="col-lg-1 spn"><a href="#">关于</a></div>
-        <div class="col-lg-5 spn find">
-            <div class="input-group">
-                <input id="input1" type="text" value placeholder="博客点击开始" autocomplete="off" onkeydown="onKeyDown(event)">
-                <button id="shosuo"></button>
-
-                </span>
-            </div>
-            <!--搜索处理，放在js中-->
-            <!--            <script>-->
-            <!--                /* 搜索框  */-->
-            <!--                function onKeyDown(event){-->
-            <!--                    //执行搜索点击事件-->
-
-            <!--                }-->
-            <!--            </script>-->
-        </div>
-        <div class="col-lg-1 spn"><a href="#"class="a1"><i class="li1"></i>创作中心</a></div>
-        <div class="col-lg-1 spn" id="spnTou"><a href="#">头像</a>
-            <ul>
-                <li><a href="#"> 我的博客</a></li>
-                <li><a href="#">更多</a></li>
-                <li><a href="#">退出</a></li>
-            </ul>
-        </div>
-        <div class="col-lg-1 spn"></div>
-    </div>
-</div>
-<!--控制头像下列表-->
-<script>
-    $(document).ready(
-        $('#spnTou').mouseover(
-            function(){
-                $("#spnTou ul li").css("display","block")
-            }
-        ),
-        $('#spnTou').mouseout(
-            function(){
-                $("#spnTou ul li").css("display","none")
-            }
-        )
-    )
-</script>
+<%@include file="span.jsp"%>
 <div class="content">
     <div class="login">
         <div id="loginLeft">
@@ -208,45 +65,37 @@
                 <div  class="contain contain-edit">
                     <form class="el-form demo-ruleForm el-form--label-right" method="post" action="registerServlet">
                         <div class="el-form-item el-form-item--feedback is-error">
-                            <label  class="el-form-item__label" style="width: 80px;">昵称</label>
-                            <div class="el-form-item__content" style="margin-left: 80px;">
+                            <label  class="el-form-item__label" style="width: 80px;">用户名</label>
+                            <div class="el-form-item__content" style="margin-left: 80px;width: 600px">
                                 <div class="el-input">
-                                    <input type="text" autocomplete="off" placeholder="请设置昵称" class="el-input__inner" name="user_name">
+                                    <input type="text" id="name1" autocomplete="off" placeholder="请设置昵称" class="required" name="user_name">
                                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner"></span>
                         <i class="el-input__icon el-input__validateIcon el-icon-circle-close"></i>
                     </span></div>
-                                <div class="el-form-item__error" style="height: 16px;width: 155px" >
-                                    昵称长度需在 2 到 20 个字符
-                                </div>
                             </div>
                         </div>
+
                         <div data-v-165b75c4="" class="el-form-item el-form-item--feedback is-error">
                             <label  class="el-form-item__label" style="width: 80px;">密码</label>
-                            <div class="el-form-item__content" style="margin-left: 80px;">
+                            <div class="el-form-item__content" style="margin-left: 80px;width: 600px">
                                 <div data-v-165b75c4="" class="el-input">
-                                    <input type="password" autocomplete="off" placeholder="请设置密码" class="el-input__inner" name="user_password">
+                                    <input type="password"  autocomplete="off" placeholder="请设置密码" class="required1" id="psd1" name="password">
                                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner"></span>
                         <i class="el-input__icon el-input__validateIcon el-icon-circle-close"></i>
                     </span></div>
-                                <div class="el-form-item__error" style="height: 16px;width: 155px">
-                                    密码长度需在 2 到 20 个字符
-                                </div>
                             </div>
                         </div>
                         <div data-v-165b75c4="" class="el-form-item el-form-item--feedback is-error">
                             <label  class="el-form-item__label" style="width: 80px;">电话号码</label>
-                            <div class="el-form-item__content" style="margin-left: 80px;">
+                            <div class="el-form-item__content" style="margin-left: 80px;width: 600px">
                                 <div data-v-165b75c4="" class="el-input">
-                                    <input type="text" autocomplete="off" placeholder="请输入电话号码" class="el-input__inner" name="user_telephone_number">
+                                    <input type="text" autocomplete="off" placeholder="请输入电话号码" class="required2" id="telephone1" name="telephone">
                                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner"></span>
                         <i class="el-input__icon el-input__validateIcon el-icon-circle-close"></i>
                     </span></div>
-                                <div class="el-form-item__error" style="height: 16px;width: 155px">
-                                    手机号码需 11 个数字
-                                </div>
                             </div>
                         </div>
                         <div class="birthdaySelect">
@@ -255,19 +104,73 @@
                             <select id="selDay" class="birthdaySel" name="birthdayDay"></select>日
                         </div>
                         <!--完成出生日期的选择--需写在</body>前-->
-                        <script>
+                        <script type="text/javascript">
                             var selYear = window.document.getElementById("selYear");
                             var selMonth = window.document.getElementById("selMonth");
                             var selDay = window.document.getElementById("selDay");
                             // 新建一个DateSelector类的实例，将三个select对象传进去
-                            // new DateSelector(selYear, selMonth, selDay, 1995, 1, 17);
-                            new DateSelector(selYear,selMonth,selDay,1995,1,17);
+                            new DateSelector(selYear, selMonth, selDay, 1995, 1, 17);
                         </script>
-<%--                        <div style="margin-left: 100px">--%>
-<%--                        年龄:--%>
-<%--                        <input type="text" name="user_age" ><br>--%>
-<%--                        </div>--%>
-                        <input type="submit" value="注册" style="text-align: center;margin-left: 150px;margin-top: 10px">
+                        <button type="submit" class="btn btn-default btn-lg" style="width: 240px;margin-top: 20px;margin-left: 80px">注册</button>
+                        <script>
+                            // $("form :input.required").each(function () {
+                            //     var $required = $("<strong class='high'><br/>密码不能为空</strong>");
+                            //     $(this).parent().append($required);
+                            // });
+                            // $("form:input").focus(function () {
+                            //     var $parent1 = $(this).parent();
+                            //     if($(this).is("#name1")){
+                            //         if (){}
+                            //     }
+                            // })
+                            $("form :input").blur(function(){
+                                var $parent = $(this).parent();
+                                $parent.find(".msg").remove();
+                                if($(this).is("#name1")){
+                                    var nameVal = $.trim(this.value); //原生js去空格方式：this.replace(/(^\s*)|(\s*$)/g, "")
+                                    var regName =/^[a-zA-Z][a-zA-Z\d_-]{1,7}$/
+                                    if(nameVal == "" ||!regName.test(nameVal)){
+                                        var e = "<div><img src='img/green@2x.png' width='18px'height='18px'>不包括空格</div>" +
+                                            "<div><img src='img/info@2x.png'width='18px' height='18px'>长度为2-8个字符</div>" +
+                                            "<div><img src='img/info@2x.png' width='18px' height='18px'>必须包含字母、数字、字符至少两种</div>";
+                                        $parent.append("<span class='msg onError'>" +e+ "</span>");
+                                    }
+                                    else{
+                                        var okMsg='<img src="img/green@2x.png" width="18px" height="18px">';
+                                        $parent.find(".high").remove();
+                                        $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+                                    }
+                                }
+                                if($(this).is("#psd1")){
+                                    var nameVal = $.trim(this.value); //原生js去空格方式：this.replace(/(^\s*)|(\s*$)/g, "")
+                                    var regName = /^[\s\S]{6,12}/;
+                                    if(nameVal == "" ||!regName.test(nameVal)){
+                                        var errorMsg = "<div>长度6-12个字符</div>";
+                                        //class='msg onError' 中间的空格是层叠样式的格式
+                                        $parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+                                    }
+                                    else{
+                                        var okMsg="<img src='img/green@2x.png 'width='18px' height='18px'>";
+                                        $parent.find(".high").remove();
+                                        $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+                                    }
+                                }
+                                if($(this).is("#telephone1")){
+                                    var nameVal = $.trim(this.value); //原生js去空格方式：this.replace(/(^\s*)|(\s*$)/g, "")
+                                    var regName = /^1\d{10}$/;
+                                    if(nameVal == "" || !regName.test(nameVal)){
+                                        var errorMsg = "<div>请输入11位电话号码</div>";
+                                        //class='msg onError' 中间的空格是层叠样式的格式
+                                        $parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+                                    }
+                                    else{
+                                        var okMsg="<img src='img/green@2x.png 'width='18px' height='18px'>";
+                                        $parent.find(".high").remove();
+                                        $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+                                    }
+                                }
+                            });
+                        </script>
                     </form>
                 </div>
             </div>
